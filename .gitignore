@@ -1,0 +1,22 @@
+# OS
+.DS_Store
+Thumbs.db
+__MACOSX/
+
+# IDE / editor config
+.cursor/
+.obsidian/
+.claude/
+.vscode/
+
+# Python
+__pycache__/
+.venv/
+*.pyc
+
+# Solved lab notebooks (instructor-only)
+**/solved/
+**/solved-labs/
+
+# Lab datasets
+**/data/
