@@ -20,3 +20,8 @@ __pycache__/
 
 # Lab datasets
 **/data/
+QR.svg
+
+# Hidden until ready to publish — labs & non-lecture material (slides stay public)
+week1/labs/
+week1/day3_lbp_feature_explainer.html
