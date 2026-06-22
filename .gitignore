@@ -25,4 +25,5 @@ QR.svg
 # Hidden until ready to publish — labs & non-lecture material (slides stay public)
 week1/labs/*
 !week1/labs/day1_*.ipynb
+!week1/labs/day2_*.ipynb
 week1/day3_lbp_feature_explainer.html
