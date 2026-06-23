@@ -1,0 +1,136 @@
+
+<style>
+  body{margin:0}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;width:180px}
+  .cell{width:54px;height:54px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;border-radius:6px;transition:background .3s,color .3s;border:0.5px solid var(--color-border-tertiary)}
+  .center{border:2px solid var(--color-border-info);background:var(--color-background-info);color:var(--color-text-info)}
+  .bit1{background:#c0dd97;color:#27500a}
+  .bit0{background:#f7c1c1;color:#791f1f}
+  .bit-box{display:inline-flex;width:26px;height:26px;align-items:center;justify-content:center;border-radius:4px;font-size:13px;font-weight:500;margin:2px;transition:background .3s,color .3s}
+  .b1{background:#c0dd97;color:#27500a}
+  .b0{background:#f7c1c1;color:#791f1f}
+  label{font-size:13px;color:var(--color-text-secondary)}
+  .section{margin-bottom:18px}
+  h3{font-size:15px;font-weight:500;margin:0 0 8px;color:var(--color-text-primary)}
+  p{font-size:13px;color:var(--color-text-secondary);margin:0 0 10px;line-height:1.6}
+  .val{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+  .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;background:var(--color-background-secondary);color:var(--color-text-secondary);margin-left:8px}
+  .sliders{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+  .sl-row{display:flex;flex-direction:column;gap:3px}
+  .neighbor-label{font-size:11px;color:var(--color-text-tertiary)}
+</style>
+<div style="padding:1rem 0">
+  <h2 class="sr-only">LBP (Local Binary Pattern) interactive explainer</h2>
+
+  <div style="display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start">
+    <div>
+      <h3>3×3 pixel patch</h3>
+      <p>Center = reference pixel<br>Neighbors compared to center</p>
+      <div class="grid" id="grid"></div>
+      <p style="margin-top:10px;font-size:12px">Drag sliders → watch bits change</p>
+    </div>
+
+    <div>
+      <div class="section">
+        <h3>Center pixel value</h3>
+        <div class="sl-row">
+          <label>Center: <span id="cv-label">128</span></label>
+          <input type="range" min="0" max="255" value="128" id="center-slider" style="width:100%">
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Neighbors</h3>
+        <div class="sliders" id="neighbor-sliders"></div>
+      </div>
+
+      <div class="section">
+        <h3>LBP bits (clockwise)</h3>
+        <div id="bits" style="display:flex;flex-wrap:wrap;gap:2px;margin-bottom:8px"></div>
+        <p>Green = 1 (neighbor ≥ center) &nbsp; Red = 0 (neighbor &lt; center)</p>
+      </div>
+
+      <div class="section">
+        <h3>LBP code</h3>
+        <span class="val" id="lbp-val">0</span>
+        <span class="badge" id="lbp-bin">00000000</span>
+        <p style="margin-top:6px">This number is the texture descriptor for this pixel</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const neighborOrder = [0,1,2,5,8,7,6,3];
+const labels = ['TL','T','TR','R','BR','B','BL','L'];
+const neighborVals = [120,130,100,160,90,200,110,140];
+let centerVal = 128;
+
+function update() {
+  const bits = neighborOrder.map(i => neighborVals[i] >= centerVal ? 1 : 0);
+  let lbp = 0;
+  bits.forEach((b,i) => { lbp += b * Math.pow(2, i); });
+
+  // Update grid
+  const cells = document.querySelectorAll('.cell');
+  const allVals = [
+    neighborVals[0], neighborVals[1], neighborVals[2],
+    neighborVals[3], centerVal,       neighborVals[4],
+    neighborVals[5], neighborVals[6], neighborVals[7]
+  ];
+  const orderMap = [0,1,2,3,null,4,5,6,7];
+  cells.forEach((c,i) => {
+    c.textContent = allVals[i];
+    if (i === 4) { c.className='cell center'; return; }
+    const ni = orderMap[i];
+    const bit = neighborVals[ni] >= centerVal ? 1 : 0;
+    c.className = 'cell ' + (bit ? 'bit1' : 'bit0');
+  });
+
+  // Update bits
+  const bDiv = document.getElementById('bits');
+  bDiv.innerHTML = '';
+  bits.forEach(b => {
+    const s = document.createElement('span');
+    s.className = 'bit-box ' + (b ? 'b1' : 'b0');
+    s.textContent = b;
+    bDiv.appendChild(s);
+  });
+
+  document.getElementById('lbp-val').textContent = Math.round(lbp);
+  document.getElementById('lbp-bin').textContent = lbp.toString(2).padStart(8,'0');
+}
+
+// Build grid
+const grid = document.getElementById('grid');
+for (let i=0;i<9;i++){
+  const d = document.createElement('div');
+  d.className = i===4 ? 'cell center' : 'cell';
+  d.textContent = i===4 ? centerVal : neighborVals[[0,1,2,3,null,4,5,6,7][i]];
+  grid.appendChild(d);
+}
+
+// Center slider
+const cs = document.getElementById('center-slider');
+cs.addEventListener('input', () => {
+  centerVal = +cs.value;
+  document.getElementById('cv-label').textContent = centerVal;
+  update();
+});
+
+// Neighbor sliders
+const ns = document.getElementById('neighbor-sliders');
+labels.forEach((lbl, i) => {
+  const row = document.createElement('div');
+  row.className='sl-row';
+  row.innerHTML=`<label class="neighbor-label">${lbl}: <span id="n${i}">${neighborVals[i]}</span></label><input type="range" min="0" max="255" value="${neighborVals[i]}" style="width:100%">`;
+  row.querySelector('input').addEventListener('input', e => {
+    neighborVals[i] = +e.target.value;
+    document.getElementById('n'+i).textContent = neighborVals[i];
+    update();
+  });
+  ns.appendChild(row);
+});
+
+update();
+</script>

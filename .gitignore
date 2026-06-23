@@ -26,4 +26,4 @@ QR.svg
 week1/labs/*
 !week1/labs/day1_*.ipynb
 !week1/labs/day2_*.ipynb
-week1/day3_lbp_feature_explainer.html
+!week1/labs/day3_*.ipynb
