@@ -27,3 +27,5 @@ week1/labs/*
 !week1/labs/day1_*.ipynb
 !week1/labs/day2_*.ipynb
 !week1/labs/day3_*.ipynb
+!week1/labs/CK+.zip
+!week1/labs/haarcascade_frontalface_default.xml
