@@ -11,9 +11,20 @@
   <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="../assets/css/style.css" rel="stylesheet">
   <style>
-    html, body { height: 100%; }
-    body { display: flex; flex-direction: column; min-height: 100vh; }
-    main { flex: 1; }
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      flex: 1;
+    }
   </style>
 </head>
 
@@ -61,9 +72,9 @@
         <div class="row">
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mb-4 animate-up delay-100">
             <div class="icon-box w-100">
-              <i class="ri-calendar-event-line"></i>
+              <i class="ri-cloud-line"></i>
               <h3><a href="day1.html">Day 1 &mdash; July 26</a></h3>
-              <p>Topics to be announced</p>
+              <p>Inside a data center</p>
             </div>
           </div>
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mb-4 animate-up delay-200">
@@ -111,7 +122,7 @@
           Recording and uploading lectures online is not permitted.
         </div>
         <div class="credits" style="font-size: 14px; margin-top: 5px; color: #555;">
-          Website created by  <strong>Sattam Altwaim</strong>
+          Website created by <strong>Sattam Altwaim</strong>
         </div>
       </div>
     </div>
@@ -135,11 +146,11 @@
       this.classList.toggle('bi-x')
     })
 
-    document.querySelectorAll(".icon-box").forEach(function(box) {
+    document.querySelectorAll(".icon-box").forEach(function (box) {
       var link = box.querySelector("h3 a");
       if (link) {
         box.style.cursor = "pointer";
-        box.addEventListener("click", function(e) {
+        box.addEventListener("click", function (e) {
           if (!e.target.closest("a")) link.click();
         });
       }
