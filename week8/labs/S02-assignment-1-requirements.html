@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S02 — Requirements &amp; Constraints · Report 1 §1 · Sheets 1 &amp; 2</title>
+<style>
+/* KGSP Drones — fillable deliverable. Screen-first, not print-first.
+   Self-contained on purpose: no external CSS, no font CDN, no script file.
+   The Export button writes a copy of THIS document with the answers baked
+   in as attributes, so the exported file opens correctly anywhere, offline,
+   with no dependency on this folder. That only works if everything is
+   inline — do not factor the CSS out into a shared file. */
+:root {
+  --ink:      #14202a;
+  --ink-2:    #3d525f;
+  --muted:    #6d8593;
+  --line:     #c9d6de;
+  --line-2:   #e6edf1;
+  --field:    #ffffff;
+  --field-bd: #b6c6d0;
+  --paper:    #f4f7f9;
+  --card:     #ffffff;
+  --accent:   #0b6a87;
+  --hw:       #9a3455;
+  --warn:     #8a5a00;
+  --warn-bg:  #fdf6e6;
+  --ok:       #1f6b45;
+  --ok-bg:    #edf6f1;
+  --f-ui:     "Segoe UI Variable Text", "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
+  --f-mono:   "Cascadia Mono", Consolas, ui-monospace, SFMono-Regular, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e8eff3; --ink-2: #b9c9d3; --muted: #8ba0ad;
+    --line: #2b3a45; --line-2: #223039;
+    --field: #131c23; --field-bd: #354854;
+    --paper: #0d151b; --card: #111b22;
+    --accent: #58c0e0; --hw: #e06a8c; --warn: #d8a23f; --warn-bg: #241d0f;
+    --ok: #5cc48d; --ok-bg: #10231a;
+  }
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body {
+  margin: 0;
+  font-family: var(--f-ui);
+  color: var(--ink);
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+.wrap { max-width: 60rem; margin: 0 auto; padding: 1.5rem 1.1rem 5rem; }
+
+/* ── Masthead ───────────────────────────────────────────────── */
+.mast { border-bottom: 2px solid var(--ink); padding-bottom: .8rem; }
+.eyebrow {
+  font-family: var(--f-mono); font-size: .7rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600;
+}
+h1 { font-size: 1.6rem; line-height: 1.15; margin: .35rem 0 .3rem; letter-spacing: -.02em; }
+.sub { font-size: .88rem; color: var(--muted); }
+.sub b { color: var(--ink-2); }
+
+/* ── Identity fields ────────────────────────────────────────── */
+.who { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 1rem; }
+.who label { flex: 1 1 12rem; }
+
+/* ── Sections ───────────────────────────────────────────────── */
+section {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 1rem 1.1rem 1.1rem;
+  margin-top: 1.1rem;
+}
+section > h2 {
+  font-size: 1rem; margin: 0 0 .15rem; letter-spacing: -.01em;
+  display: flex; align-items: baseline; gap: .55rem; flex-wrap: wrap;
+}
+.n {
+  font-family: var(--f-mono); font-size: .72rem; color: var(--accent);
+  font-weight: 700; letter-spacing: .1em; flex: none;
+}
+.hint { font-size: .84rem; color: var(--muted); margin: .1rem 0 .7rem; }
+.hint b { color: var(--ink-2); }
+
+/* ── Form controls ──────────────────────────────────────────── */
+label { display: block; font-size: .78rem; color: var(--muted); font-weight: 600;
+        letter-spacing: .01em; margin-bottom: .28rem; }
+input[type=text], input[type=number], textarea {
+  width: 100%; font: inherit; font-size: .92rem; color: var(--ink);
+  background: var(--field); border: 1px solid var(--field-bd);
+  border-radius: 4px; padding: .5rem .6rem;
+}
+textarea { resize: vertical; min-height: 4.2rem; line-height: 1.45; }
+input:focus, textarea:focus {
+  outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent);
+}
+/* The toolbar is sticky at the bottom, so a field scrolled into view on focus
+   can land underneath it — worst on a phone with the keyboard up. scroll-margin
+   reserves the bar's height whenever the browser scrolls to a field. */
+input, textarea { scroll-margin-bottom: 5.5rem; }
+section:last-of-type { margin-bottom: 2.5rem; }
+.row { display: grid; gap: .9rem; margin-top: .8rem; }
+@media (min-width: 42rem) { .row.two { grid-template-columns: 1fr 1fr; }
+                            .row.three { grid-template-columns: 1fr 1fr 1fr; }
+                            .row.sider { grid-template-columns: 13rem 1fr; } }
+
+/* ── Choice chips (radio) ───────────────────────────────────── */
+.picks { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .15rem; }
+.pick { flex: 1 1 9rem; }
+.pick input { position: absolute; opacity: 0; pointer-events: none; }
+.pick span {
+  display: block; cursor: pointer; text-align: left;
+  border: 1px solid var(--field-bd); background: var(--field);
+  border-radius: 5px; padding: .5rem .65rem; font-size: .88rem; font-weight: 600;
+}
+.pick span i { display: block; font-style: normal; font-weight: 400;
+               font-size: .76rem; color: var(--muted); margin-top: .12rem; line-height: 1.35; }
+.pick input:checked + span {
+  border-color: var(--accent); background: var(--ok-bg);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+.pick input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* ── Reference block: given, not chosen → amber ─────────────── */
+.ref {
+  background: var(--warn-bg); border: 1px solid var(--line);
+  border-left: 3px solid var(--warn); border-radius: 5px;
+  padding: .7rem .85rem; margin-top: .85rem; font-size: .84rem; color: var(--ink-2);
+}
+.ref h3 { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--warn); margin: 0 0 .4rem; font-weight: 700; }
+.ref table { border-collapse: collapse; font-size: .84rem; margin-top: .1rem; }
+.ref td { padding: .12rem .9rem .12rem 0; }
+.ref td:first-child { font-family: var(--f-mono); color: var(--ink); font-weight: 600; }
+.ref code { font-family: var(--f-mono); background: none; color: var(--ink); font-weight: 600; }
+
+/* ── Tags ───────────────────────────────────────────────────── */
+.tag { font-family: var(--f-mono); font-size: .64rem; letter-spacing: .1em;
+       text-transform: uppercase; padding: .12rem .4rem; border-radius: 3px;
+       font-weight: 700; flex: none; }
+.tag.core    { color: var(--ok);   background: var(--ok-bg); }
+.tag.stretch { color: var(--warn); background: var(--warn-bg); }
+section.stretch { border-left-color: var(--warn); }
+section.readback { border-left-color: var(--ok); }
+
+/* ── Toolbar ────────────────────────────────────────────────── */
+.bar {
+  position: sticky; bottom: 0; margin-top: 1.4rem;
+  background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+  padding: .7rem .85rem; display: flex; align-items: center; gap: .7rem; flex-wrap: wrap;
+  box-shadow: 0 -2px 14px rgba(0,0,0,.07);
+}
+button {
+  font: inherit; font-size: .88rem; font-weight: 600; cursor: pointer;
+  border-radius: 5px; padding: .5rem .95rem; border: 1px solid var(--field-bd);
+  background: var(--field); color: var(--ink);
+}
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+button:hover { filter: brightness(1.06); }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.status { font-size: .8rem; color: var(--muted); margin-left: auto; }
+.status.ok { color: var(--ok); }
+
+.foot { margin-top: 1.2rem; font-size: .78rem; color: var(--muted); }
+
+/* ── Exported copy ──────────────────────────────────────────── */
+body.exported .bar, body.exported .no-export { display: none; }
+body.exported input, body.exported textarea {
+  background: transparent; border-color: var(--line-2); color: var(--ink);
+}
+body.exported .pick input:not(:checked) + span { opacity: .35; }
+.stamp {
+  display: none; background: var(--ok-bg); border: 1px solid var(--ok);
+  border-radius: 5px; padding: .55rem .8rem; margin-top: 1rem;
+  font-size: .84rem; color: var(--ink-2);
+}
+body.exported .stamp { display: block; }
+
+/* ══ Added for the sheets that carry tables ══════════════════════
+   Everything above this line is byte-identical to s03-airframe.html,
+   the approved prototype, so the two can still be diffed. */
+
+/* ── Reflowing grid table ───────────────────────────────────────
+   Not a <table>. On a phone every cell stacks and carries its own
+   label; at 46rem the labels hide and a header row appears, so the
+   same markup is a form on a phone and a table on a laptop. The
+   column template is per-sheet content, passed in as --cols, which
+   is what keeps this CSS block identical across every sheet. */
+.gt { margin-top: .85rem; }
+.gt-h { display: none; }
+.gt-r {
+  display: grid; gap: .55rem; padding: .75rem 0;
+  border-top: 1px solid var(--line-2);
+}
+.gt-r:first-of-type { border-top: 0; padding-top: .35rem; }
+.gt-c > span {
+  display: block; font-size: .72rem; color: var(--muted);
+  font-weight: 600; margin-bottom: .26rem;
+}
+.gt-k { font-family: var(--f-mono); font-weight: 700; color: var(--accent); font-size: .9rem; }
+.gt-c .fix { font-size: .86rem; font-weight: 600; color: var(--ink); }
+.gt-c .fix i { display: block; font-style: normal; font-weight: 400;
+               font-size: .74rem; color: var(--muted); line-height: 1.35; }
+@media (min-width: 46rem) {
+  .gt-h, .gt-r { grid-template-columns: var(--cols, 1fr); }
+  .gt-h {
+    display: grid; gap: .55rem; padding-bottom: .4rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .gt-h > div { font-size: .72rem; color: var(--muted); font-weight: 600; }
+  .gt-h > div i { display: block; font-style: normal; font-weight: 400;
+                  font-size: .68rem; opacity: .85; line-height: 1.3; }
+  .gt-r { align-items: start; }
+  .gt-c > span { display: none; }
+}
+
+/* A binary verdict is two short chips, not two full-width ones. Inside a
+   narrow table column the 9rem flex-basis above wraps them onto separate
+   lines, which reads as two questions rather than one. Caught on a PNG. */
+.picks.vd { gap: .4rem; }
+.picks.vd .pick { flex: 1 1 3rem; }
+.picks.vd .pick span { text-align: center; padding: .5rem .3rem; }
+
+/* ── A genuinely two-dimensional table (the decision matrix) ────
+   Stacking this one would destroy it — the whole point is reading
+   across options. It scrolls inside its own box instead, so the
+   page itself never scrolls sideways. */
+.scroll { overflow-x: auto; margin-top: .85rem; }
+table.mtx { border-collapse: collapse; width: 100%; min-width: 33rem; }
+table.mtx th, table.mtx td {
+  border: 1px solid var(--line); padding: .3rem .35rem; text-align: left;
+  vertical-align: top;
+}
+table.mtx th { font-size: .7rem; color: var(--muted); font-weight: 600; }
+table.mtx th i { display: block; font-style: normal; font-weight: 400; opacity: .85; }
+table.mtx input { font-size: .85rem; padding: .35rem .4rem; }
+table.mtx td.id { font-family: var(--f-mono); font-weight: 700; color: var(--accent);
+                  font-size: .8rem; text-align: center; }
+table.mtx tr.tot td { background: var(--paper); font-size: .78rem; color: var(--muted); font-weight: 600; }
+table.mtx tr.tot td.sum { font-family: var(--f-mono); font-size: .95rem; color: var(--accent);
+                          font-weight: 700; text-align: center; }
+
+/* ── Computed output: only ever appears on a button press ──────
+   Never live. S02's first stated failure mode is deciding the answer
+   and scoring backwards, and a running total invites exactly that. */
+.out {
+  display: none; margin-top: .85rem; background: var(--ok-bg);
+  border: 1px solid var(--ok); border-left: 3px solid var(--ok);
+  border-radius: 5px; padding: .7rem .85rem; font-size: .86rem; color: var(--ink-2);
+}
+.out.show { display: block; }
+.out h3 { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--ok); margin: 0 0 .4rem; font-weight: 700; }
+.out b { font-family: var(--f-mono); color: var(--ink); }
+.out .stale { color: var(--warn); font-weight: 600; }
+button.calc { margin-top: .85rem; }
+
+/* ── A quoted problem statement, or any given text ─────────────── */
+.brief {
+  font-size: .89rem; color: var(--ink-2); background: var(--paper);
+  border-radius: 5px; padding: .6rem .75rem; margin: .15rem 0 .2rem;
+}
+.brief b { color: var(--ink); }
+
+/* ── .bf — a collapsible mission brief ──────────────────────────────────
+   The briefs live inside the sheet the team is filling in, so nobody has to
+   be handed a separate document — and so a team cannot end up working from a
+   brief that has drifted from the one in the answer key. The markup between
+   the BRIEFS markers is GENERATED: edit handouts/briefs/briefs.data.mjs and
+   run handouts/briefs/build.mjs. Editing it here is overwritten.
+   Collapsed by default so the sheet still opens on the work, not the reading. */
+.bf { background: var(--card); border: 1px solid var(--line); border-radius: 6px; margin: .5rem 0; }
+.bf > summary {
+  cursor: pointer; padding: .7rem .85rem; display: flex; flex-wrap: wrap;
+  align-items: baseline; gap: .3rem .7rem; list-style: none; border-radius: 6px;
+}
+.bf > summary::-webkit-details-marker { display: none; }
+.bf > summary::before { content: "▸"; color: var(--accent); flex: none; }
+.bf[open] > summary::before { content: "▾"; }
+.bf[open] > summary { border-bottom: 1px solid var(--line-2); border-radius: 6px 6px 0 0; }
+.bf-id {
+  font-family: var(--f-mono); font-size: .72rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: #fff; background: var(--accent);
+  padding: .12rem .45rem; border-radius: 3px; flex: none;
+}
+.bf-t { font-weight: 640; }
+.bf-s { color: var(--muted); font-size: .8rem; margin-left: auto; }
+.bf-body { padding: .3rem 1rem 1rem; font-size: .92rem; }
+.bf-body h4 {
+  font-family: var(--f-mono); font-size: .74rem; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--accent); margin: .95rem 0 .3rem;
+}
+.bf-op { color: var(--ink-2); font-size: .85rem; }
+.bf-body ul { margin: .4rem 0; padding-left: 1.1rem; }
+.bf-body li { margin: .28rem 0; }
+.bf-n {
+  display: flex; flex-direction: column; gap: 1px;
+  background: var(--line-2); border: 1px solid var(--line-2);
+  border-radius: 4px; overflow: hidden;
+}
+.bf-r { display: grid; grid-template-columns: 13rem 1fr; gap: .7rem; background: var(--card); padding: .4rem .65rem; }
+.bf-k { font-weight: 600; }
+.bf-v { color: var(--ink-2); }
+.bf-w {
+  background: var(--warn-bg); border-left: 3px solid var(--warn);
+  padding: .55rem .75rem; border-radius: 0 4px 4px 0; margin-top: .8rem;
+}
+/* The brief must reflow rather than scroll — check.mjs fails the sheet on any
+   horizontal overflow at 390 px, and a two-column definition row is the thing
+   most likely to cause it. */
+@media (max-width: 46rem) {
+  .bf-r { grid-template-columns: 1fr; gap: .1rem; }
+  .bf-s { margin-left: 0; width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mast">
+    <div class="eyebrow">Session S02 · Sheets 1 &amp; 2</div>
+    <h1>Requirements &amp; constraints</h1>
+    <div class="sub"><b>Report 1 §1</b> · about 16 minutes, then move on ready or not · Report 1 is <b>15%</b> of the course</div>
+    <div class="who">
+      <label>Team<input type="text" id="team" autocomplete="off"></label>
+      <label>Brief (A, B or C)<input type="text" id="brief" autocomplete="off"></label>
+      <label>Names<input type="text" id="names" autocomplete="off"></label>
+    </div>
+  </div>
+
+  <div class="stamp">Submitted copy — exported from the fillable sheet. Fields are a record and are no longer saved.</div>
+
+  <section class="briefs">
+    <h2><span class="n">00</span> The three briefs <span class="tag core">Read first</span></h2>
+    <p class="hint">All three are here so nothing has to be handed round. <b>Open yours, work yours.</b> Write its letter in the <b>Brief</b> box above; everything you write on this sheet comes from that one brief. The other two are here for context at the review, not to work from — a set of requirements that would fit somebody else's brief is too vague to be requirements.</p>
+<!-- BRIEFS:BEGIN -->
+<details class="bf">
+<summary><span class="bf-id">Brief A</span><span class="bf-t">Shallow-Reef Photographic Survey</span><span class="bf-s">Coastal and marine · survey</span></summary>
+<div class="bf-body">
+<p class="bf-op"><b>Operator</b> KAUST Coastal & Marine Resources Core Lab</p>
+<p>Reef flats along the Red Sea coast are bleaching. The lab needs a photographic record precise enough and repeatable enough to measure how far the bleaching has spread between one visit and the next — which means the same lines, at the same resolution, every time.</p>
+<p>Boat-based survey does not do this. It is slow, it is expensive in ship time, and a hull cannot get over the shallowest flats, which are exactly the parts changing fastest. They want an aerial system they can redeploy every quarter for five years, and they want to know <b>before</b> they buy it whether one aircraft can do the job in the time available.</p>
+<h4>What you must deliver</h4>
+<p>A continuous photographic strip of the coastal corridor, overlapping enough to be stitched into a single orthomosaic, at a resolution fine enough to identify individual coral heads.</p>
+<h4>The numbers</h4>
+<div class="bf-n"><div class="bf-r"><div class="bf-k">Survey corridor</div><div class="bf-v"><b>12 km</b> of coastline × <b>400 m</b> offshore — 4.8 km²</div></div><div class="bf-r"><div class="bf-k">Ground sample distance</div><div class="bf-v"><b>≤ 2 cm per pixel</b>, across the whole corridor, not just at the centre</div></div><div class="bf-r"><div class="bf-k">Image overlap</div><div class="bf-v"><b>70% forward</b>, <b>60% side</b></div></div><div class="bf-r"><div class="bf-k">Survey window</div><div class="bf-v">The full 12 km within <b>one working day</b>, sea state permitting</div></div><div class="bf-r"><div class="bf-k">Repeatability</div><div class="bf-v">The same flight lines, quarterly, for <b>5 years</b></div></div><div class="bf-r"><div class="bf-k">Data</div><div class="bf-v">Every image geotagged. Recorded onboard; no live downlink needed</div></div></div>
+<h4>Where you will be operating</h4>
+<ul><li><b>There is no runway, no catapult and no prepared surface.</b> Launch and recovery is from an open beach or the aft deck of a 9 m survey vessel — roughly 3 × 4 m of clear space, with rigging above it.</li><li>Onshore wind <b>4–9 m/s</b> through the day, gusting higher after mid-afternoon</li><li>Air temperature <b>30–40 °C</b>, salt spray throughout, strong glare off the water</li><li><b>Most of every sortie is spent over water</b>, out to 400 m from shore. There is nowhere to put an aircraft down between the beach and the far edge of the corridor.</li></ul>
+<h4>What the aircraft must carry</h4>
+<ul><li>A down-looking camera capable of the required GSD, on a stabilised mount</li><li>Allow <b>400 g</b> for camera plus mount, drawing <b>8 W</b> in flight</li><li>Onboard recording. No live video link is required, but position must be logged with each frame or the imagery cannot be stitched.</li></ul>
+<h4>What you cannot change</h4>
+<ul><li>Total system cost <b>≤ $8,000</b> per aircraft</li><li>A <b>two-person crew</b>, both of whom are also running the boat. Nobody is free to do nothing but watch the aircraft.</li><li>The whole system travels in one vehicle with the crew and their dive gear</li><li><b>A vehicle lost over water is a total loss.</b> There is no recovery. The lab has asked what happens if the aircraft fails mid-corridor and expects a real answer, not "it returns to launch".</li></ul>
+<h4>Yours to decide, and to defend</h4>
+<p>Cruise speed. Survey altitude. How many passes, and in which direction relative to the coast. How many sorties, and whether one aircraft or more than one. Battery chemistry and capacity. What happens on a failure over water.</p>
+
+</div>
+</details>
+<details class="bf">
+<summary><span class="bf-id">Brief B</span><span class="bf-t">Desalination Plant Asset Inspection</span><span class="bf-s">Plant integrity · close-range inspection</span></summary>
+<div class="bf-body">
+<p class="bf-op"><b>Operator</b> Operations & Integrity, Red Sea desalination facility</p>
+<p>Structural inspection of the intake works, the pipe racks and the exhaust stack currently needs rope-access teams and a scaffold permit. It is slow, it is the single highest-risk routine activity on the site, and it forces partial shutdowns that cost more than the inspection does.</p>
+<p>The integrity group wants imagery good enough to grade corrosion — to decide whether a given weld or flange is fine, watch-listed, or needs intervention — gathered without putting a person on a rope. What they are buying is <b>close-range imagery of things that are difficult and dangerous to stand next to.</b></p>
+<h4>What you must deliver</h4>
+<p>Inspection-grade imagery of vertical and overhead structures, with enough positional context that a finding can be located again on the next visit.</p>
+<h4>The numbers</h4>
+<div class="bf-n"><div class="bf-r"><div class="bf-k">Site footprint</div><div class="bf-v"><b>200 × 150 m</b></div></div><div class="bf-r"><div class="bf-k">Tallest asset</div><div class="bf-v"><b>45 m</b> exhaust stack</div></div><div class="bf-r"><div class="bf-k">Standoff from structure</div><div class="bf-v"><b>3–5 m</b> — closer is unsafe, further loses detail</div></div><div class="bf-r"><div class="bf-k">Position hold while capturing</div><div class="bf-v">Within <b>± 0.5 m</b></div></div><div class="bf-r"><div class="bf-k">Useful time on station</div><div class="bf-v"><b>≥ 20 minutes</b> per sortie, <i>not</i> counting transit or reserve</div></div><div class="bf-r"><div class="bf-k">Coverage per campaign</div><div class="bf-v"><b>14 assets</b>, inspected across two working days</div></div></div>
+<h4>Where you will be operating</h4>
+<ul><li><b>Dense steel and concrete in every direction.</b> Expect GPS shadowing and multipath between the pipe racks, and magnetic interference near the stack. A position estimate that is good on the apron may be useless twenty metres in.</li><li>Wind funnels between the structures — gusts to <b>8 m/s</b> at height on a day that is calm at ground level</li><li>Ambient <b>35–45 °C</b>, with hot plumes rising above the process equipment</li><li><b>The plant keeps running while you work.</b> Flight over live process areas is prohibited. The aircraft works from the perimeter and the access corridors, so it is often at the limit of its standoff rather than the middle of it.</li></ul>
+<h4>What the aircraft must carry</h4>
+<ul><li>A high-resolution visual camera <b>and</b> a thermal sensor</li><li>Both on a mount that can look <b>upward</b> as well as down. The underside of overhead pipe runs is the hardest part of this job, and the part rope access does worst.</li><li>Allow <b>600 g</b> for sensors plus mount, drawing <b>14 W</b></li><li><b>A live view to the inspector</b>, who decides where to look next while the aircraft is in the air. This is not a survey that can be planned in advance and reviewed afterwards.</li></ul>
+<h4>What you cannot change</h4>
+<ul><li>Total system cost <b>≤ $12,000</b> per aircraft</li><li>One operator, plus one plant escort who is <b>not</b> a pilot and cannot be given any task requiring flying skill</li><li>The aircraft must reach <b>45 m</b> and hold there in gusts</li><li><b>It must behave predictably when GPS degrades.</b> The operator has been shown a video of an aircraft drifting into a structure and will ask you directly what yours does.</li></ul>
+<h4>Yours to decide, and to defend</h4>
+<p>How you hold position where GPS is unreliable. Whether one aircraft covers all 14 assets or you propose something else. What redundancy you buy, and what you pay for it. Which sensors, and whether they fly together or on separate passes.</p>
+
+</div>
+</details>
+<details class="bf">
+<summary><span class="bf-id">Brief C</span><span class="bf-t">Desert Search for an Overdue Vehicle</span><span class="bf-s">Civil defence · search and rescue</span></summary>
+<div class="bf-body">
+<p class="bf-op"><b>Operator</b> Regional civil defence, in agreement with campus security</p>
+<p>Vehicles travelling between remote sites occasionally fail to arrive. A ground search of the sector takes a full day with several teams, and in summer the survivable window for a person without shade or water is far shorter than that.</p>
+<p>What civil defence wants is not a better map. It is <b>time</b>: something that can be in the air within minutes of arriving, sweep the sector far faster than vehicles can, and then stay over the target so ground teams drive to a live marker instead of a grid reference.</p>
+<h4>What you must deliver</h4>
+<p>Search a defined sector, locate a vehicle-sized target, and then remain over it.</p>
+<h4>The numbers</h4>
+<div class="bf-n"><div class="bf-r"><div class="bf-k">Search sector</div><div class="bf-v"><b>8 × 5 km</b> — 40 km²</div></div><div class="bf-r"><div class="bf-k">Target</div><div class="bf-v">A vehicle, roughly <b>4 × 2 m</b>, possibly under a tarpaulin</div></div><div class="bf-r"><div class="bf-k">First full sweep</div><div class="bf-v">Complete within <b>90 minutes</b> of arriving on scene</div></div><div class="bf-r"><div class="bf-k">Detection resolution</div><div class="bf-v"><b>≤ 10 cm per pixel</b> by day; thermal at night</div></div><div class="bf-r"><div class="bf-k">On station after locating</div><div class="bf-v"><b>≥ 15 minutes</b> overhead, holding, while ground teams close in</div></div><div class="bf-r"><div class="bf-k">Live downlink</div><div class="bf-v">Position and video to the ground team <b>throughout</b>, to 8 km</div></div></div>
+<h4>Where you will be operating</h4>
+<ul><li><b>Open desert. No runway, no power, no shade, no infrastructure of any kind.</b></li><li>Launch and recovery from the bed or roof of a pickup, on unprepared ground, with whatever the team carried in</li><li><b>40–48 °C</b> by day; afternoon wind to <b>12 m/s</b> with blowing dust</li><li>Terrain relief up to <b>60 m</b> across the sector, so line of sight to the ground station is not guaranteed everywhere</li><li>Called out <b>at any hour</b>, including at night</li></ul>
+<h4>What the aircraft must carry</h4>
+<ul><li>A combined visual and thermal sensor on a stabilised mount</li><li>Allow <b>700 g</b> for sensors plus mount, drawing <b>18 W</b></li><li>Live video and position downlink to a ground station up to <b>8 km</b> away</li></ul>
+<h4>What you cannot change</h4>
+<ul><li>Total system cost <b>≤ $25,000</b></li><li>A three-person team arriving in one vehicle and setting up in the open</li><li><b>Ready to launch within 15 minutes</b> of arriving on scene</li><li>Must operate at 40 °C+ without thermal shutdown</li><li><b>Losing the aircraft is acceptable if the target is found.</b> Failing to find the target is not. Design accordingly — this constraint is doing more work than it looks.</li></ul>
+<h4>Yours to decide, and to defend</h4>
+<p>Search pattern, altitude and sweep speed. Which sensor and which lens — the resolution requirement and the height you are allowed to fly at are not independent. Whether searching and holding are done by the same aircraft. How the 90-minute sweep sits against the endurance you claim.</p>
+<p class="bf-w">This brief contains a genuine conflict between two of its own requirements. Find it, name it in your report, and say what you did about it. A brief that appears to have no conflict has been read too quickly.</p>
+</div>
+</details>
+<!-- BRIEFS:END -->
+  </section>
+
+  <section>
+    <h2><span class="n">01</span> Three requirements. Only three. <span class="tag core">Core</span></h2>
+    <p class="hint">Every one needs a <b>subject</b>, the word <b>shall</b>, a <b>quantity with units</b>, and a <b>way to verify it</b>. If you cannot test it, it is not a requirement yet. <b>Choosing which three is the exercise</b> — they become the three rows of your matrix on the next sheet, so a requirement you would not score is a requirement you should not write.</p>
+
+    <div class="gt" style="--cols: 2.6rem 1fr 9rem 11rem 4.5rem">
+      <div class="gt-h">
+        <div>ID</div>
+        <div>Statement <i>Subject + shall + number + units</i></div>
+        <div>Source <i>Which line of your brief?</i></div>
+        <div>Verify <i>How do we prove it?</i></div>
+        <div>Rank <i>1 = top</i></div>
+      </div>
+
+      <div class="gt-r">
+        <div class="gt-c"><span>ID</span><div class="gt-k">R1</div></div>
+        <label class="gt-c"><span>Statement</span><textarea id="r1_s" style="min-height:3.4rem"></textarea></label>
+        <label class="gt-c"><span>Source</span><input type="text" id="r1_src" autocomplete="off"></label>
+        <label class="gt-c"><span>Verify</span><input type="text" id="r1_v" autocomplete="off"></label>
+        <label class="gt-c"><span>Rank</span><input type="number" id="r1_r" step="1" min="1" max="3"></label>
+      </div>
+
+      <div class="gt-r">
+        <div class="gt-c"><span>ID</span><div class="gt-k">R2</div></div>
+        <label class="gt-c"><span>Statement</span><textarea id="r2_s" style="min-height:3.4rem"></textarea></label>
+        <label class="gt-c"><span>Source</span><input type="text" id="r2_src" autocomplete="off"></label>
+        <label class="gt-c"><span>Verify</span><input type="text" id="r2_v" autocomplete="off"></label>
+        <label class="gt-c"><span>Rank</span><input type="number" id="r2_r" step="1" min="1" max="3"></label>
+      </div>
+
+      <div class="gt-r">
+        <div class="gt-c"><span>ID</span><div class="gt-k">R3</div></div>
+        <label class="gt-c"><span>Statement</span><textarea id="r3_s" style="min-height:3.4rem"></textarea></label>
+        <label class="gt-c"><span>Source</span><input type="text" id="r3_src" autocomplete="off"></label>
+        <label class="gt-c"><span>Verify</span><input type="text" id="r3_v" autocomplete="off"></label>
+        <label class="gt-c"><span>Rank</span><input type="number" id="r3_r" step="1" min="1" max="3"></label>
+      </div>
+    </div>
+
+    <div class="ref">
+      <h3>Run this test before the review</h3>
+      If your three requirements would work just as well for <b>somebody else's brief</b>, they are
+      too vague to be requirements. Three teams, three environments, three sets of numbers — your
+      list should be <b>unusable by anyone else in this room.</b>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="n">02</span> Constraints <span class="tag core">Core</span></h2>
+    <p class="hint">Every row below is <b>a number somewhere in your brief</b>. Find it, write it with its origin, and say what it <b>rules out</b>. The last two rows are yours — add any constraint your brief implies but does not state.</p>
+
+    <div class="gt" style="--cols: 9rem 1fr 8.5rem 1fr">
+      <div class="gt-h">
+        <div>Type</div>
+        <div>Statement <i>The limit, with its number and units</i></div>
+        <div>Origin <i>Who imposed it?</i></div>
+        <div>Impact <i>What does it rule out?</i></div>
+      </div>
+
+      <div class="gt-r">
+        <div class="gt-c"><span>Type</span><div class="fix">Budget<i>System cost, not airframe</i></div></div>
+        <label class="gt-c"><span>Statement</span><input type="text" id="k1_s" autocomplete="off"></label>
+        <label class="gt-c"><span>Origin</span><input type="text" id="k1_o" autocomplete="off"></label>
+        <label class="gt-c"><span>Impact</span><input type="text" id="k1_i" autocomplete="off"></label>
+      </div>
+
+      <div class="gt-r">
+        <div class="gt-c"><span>Type</span><div class="fix">Payload<i>Mass <b>and</b> power. Both are given</i></div></div>
+        <label class="gt-c"><span>Statement</span><input type="text" id="k2_s" autocomplete="off"></label>
+        <label class="gt-c"><span>Origin</span><input type="text" id="k2_o" autocomplete="off"></label>
+        <label class="gt-c"><span>Impact</span><input type="text" id="k2_i" autocomplete="off"></label>
+      </div>
+
+      <div class="gt-r">
+        <div class="gt-c"><span>Type</span><div class="fix">Crew<i>How many, and doing what else</i></div></div>
+        <label class="gt-c"><span>Statement</span><input type="text" id="k3_s" autocomplete="off"></label>
+        <label class="gt-c"><span>Origin</span><input type="text" id="k3_o" autocomplete="off"></label>
+        <label class="gt-c"><span>Impact</span><input type="text" id="k3_i" autocomplete="off"></label>
+      </div>
+
+      <div class="gt-r">
+        <div class="gt-c"><span>Type</span><div class="fix">Launch &amp; recovery<i>Read this one twice</i></div></div>
+        <label class="gt-c"><span>Statement</span><input type="text" id="k4_s" autocomplete="off"></label>
+        <label class="gt-c"><span>Origin</span><input type="text" id="k4_o" autocomplete="off"></label>
+        <label class="gt-c"><span>Impact</span><input type="text" id="k4_i" autocomplete="off"></label>
+      </div>
+
+      <div class="gt-r">
+        <div class="gt-c"><span>Type</span><div class="fix">Environment<i>Wind, temperature, ground</i></div></div>
+        <label class="gt-c"><span>Statement</span><input type="text" id="k5_s" autocomplete="off"></label>
+        <label class="gt-c"><span>Origin</span><input type="text" id="k5_o" autocomplete="off"></label>
+        <label class="gt-c"><span>Impact</span><input type="text" id="k5_i" autocomplete="off"></label>
+      </div>
+
+      <div class="gt-r">
+        <div class="gt-c"><span>Type</span><div class="fix">Schedule<i>Time available to complete it</i></div></div>
+        <label class="gt-c"><span>Statement</span><input type="text" id="k6_s" autocomplete="off"></label>
+        <label class="gt-c"><span>Origin</span><input type="text" id="k6_o" autocomplete="off"></label>
+        <label class="gt-c"><span>Impact</span><input type="text" id="k6_i" autocomplete="off"></label>
+      </div>
+
+      <div class="gt-r">
+        <div class="gt-c"><span>Type</span><div class="fix">Transport<i>How it reaches site, and who carries it</i></div></div>
+        <label class="gt-c"><span>Statement</span><input type="text" id="k7_s" autocomplete="off"></label>
+        <label class="gt-c"><span>Origin</span><input type="text" id="k7_o" autocomplete="off"></label>
+        <label class="gt-c"><span>Impact</span><input type="text" id="k7_i" autocomplete="off"></label>
+      </div>
+
+      <div class="gt-r">
+        <div class="gt-c"><span>Type</span><div class="fix">Yours</div></div>
+        <label class="gt-c"><span>Statement</span><input type="text" id="k8_s" autocomplete="off"></label>
+        <label class="gt-c"><span>Origin</span><input type="text" id="k8_o" autocomplete="off"></label>
+        <label class="gt-c"><span>Impact</span><input type="text" id="k8_i" autocomplete="off"></label>
+      </div>
+
+      <div class="gt-r">
+        <div class="gt-c"><span>Type</span><div class="fix">Yours</div></div>
+        <label class="gt-c"><span>Statement</span><input type="text" id="k9_s" autocomplete="off"></label>
+        <label class="gt-c"><span>Origin</span><input type="text" id="k9_o" autocomplete="off"></label>
+        <label class="gt-c"><span>Impact</span><input type="text" id="k9_i" autocomplete="off"></label>
+      </div>
+    </div>
+
+    <div class="ref">
+      <h3>Next</h3>
+      <b>Every line in the Impact column is a rejection waiting to be written.</b> The screening sheet
+      asks you to screen all four configuration classes, and each OUT has to name the constraint that
+      killed it — so a constraint you left vague here is a rejection you will not be able to defend there.
+    </div>
+  </section>
+
+  <section class="stretch">
+    <h2><span class="n">03</span> If you finish early <span class="tag stretch">Stretch</span></h2>
+    <div class="row"><label>Name the <b>fourth requirement you did not write</b>, and say what it lost to<textarea id="s_fourth"></textarea></label></div>
+    <div class="row"><label>Find the two in your three that <b>fight each other</b> — and say which one wins<textarea id="s_fight"></textarea></label></div>
+  </section>
+
+  <div class="bar no-export">
+    <button class="primary" id="btn-export" type="button">Export for submission</button>
+    <button id="btn-clear" type="button">Clear sheet</button>
+    <span class="status" id="status">Not saved yet</span>
+  </div>
+
+  <div class="foot no-export">
+    Your answers are saved in this browser automatically as you type — but that only protects you
+    against a closed tab. <b>Press “Export for submission” before the end of the session</b>; it
+    downloads a single file containing everything you have written, which is what gets marked.
+  </div>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var KEY = "kgsp-s02-requirements-v1";
+  var STEM = "S02-requirements-";
+  var status = document.getElementById("status");
+  var fields = Array.prototype.slice.call(
+    document.querySelectorAll("input[type=text], input[type=number], textarea, input[type=radio]")
+  );
+
+  function collect() {
+    var d = {};
+    fields.forEach(function (el) {
+      if (el.type === "radio") { if (el.checked) d["radio:" + el.name] = el.value; }
+      else if (el.id) { d[el.id] = el.value; }
+    });
+    return d;
+  }
+
+  function apply(d) {
+    fields.forEach(function (el) {
+      if (el.type === "radio") { el.checked = (d["radio:" + el.name] === el.value); }
+      else if (el.id && typeof d[el.id] === "string") { el.value = d[el.id]; }
+    });
+  }
+
+  // ── restore ──────────────────────────────────────────────────
+  try {
+    var saved = localStorage.getItem(KEY);
+    if (saved) { apply(JSON.parse(saved)); say("Restored from this browser", true); }
+  } catch (e) { say("Autosave unavailable — export often", false); }
+
+  // ── autosave, debounced ──────────────────────────────────────
+  var t = null;
+  function save() {
+    try {
+      localStorage.setItem(KEY, JSON.stringify(collect()));
+      say("Saved " + new Date().toLocaleTimeString(), true);
+    } catch (e) { say("Could not save — export now", false); }
+  }
+  function say(msg, ok) { status.textContent = msg; status.className = "status" + (ok ? " ok" : ""); }
+  fields.forEach(function (el) {
+    el.addEventListener("input", function () { clearTimeout(t); t = setTimeout(save, 400); });
+    el.addEventListener("change", save);
+  });
+
+  // ── totals, on demand only ───────────────────────────────────
+  // Any total on these sheets appears when asked for and disappears the
+  // moment an input changes underneath it, so a stale number can never be
+  // read as a current one. Nothing here computes the physics.
+  var outs = Array.prototype.slice.call(document.querySelectorAll(".out"));
+  var sums = Array.prototype.slice.call(document.querySelectorAll(".sum"));
+  function dropTotals() {
+    outs.forEach(function (o) { o.classList.remove("show"); });
+    sums.forEach(function (s) { s.textContent = "—"; });
+  }
+  fields.forEach(function (el) { el.addEventListener("input", dropTotals); });
+  // Nothing on this sheet is totalled or computed.
+
+  // ── export: bake the answers into a copy of this document ────
+  document.getElementById("btn-export").addEventListener("click", function () {
+    // Write the live values into ATTRIBUTES so a plain open of the file shows them.
+    fields.forEach(function (el) {
+      if (el.type === "radio") {
+        if (el.checked) el.setAttribute("checked", ""); else el.removeAttribute("checked");
+      } else if (el.tagName === "TEXTAREA") {
+        el.textContent = el.value;
+      } else {
+        el.setAttribute("value", el.value);
+      }
+    });
+    var clone = document.documentElement.cloneNode(true);
+    var s = clone.querySelector("script"); if (s) s.parentNode.removeChild(s);
+    clone.querySelector("body").classList.add("exported");
+    Array.prototype.forEach.call(clone.querySelectorAll("input, textarea"), function (el) {
+      el.setAttribute("readonly", "");
+      if (el.type === "radio") el.setAttribute("disabled", "");
+    });
+
+    var team = (document.getElementById("team").value || "team").trim().replace(/[^\w\-]+/g, "-");
+    var briefEl = document.getElementById("brief");
+    var brief = (briefEl ? briefEl.value : "").trim().replace(/[^\w\-]+/g, "");
+    var name = STEM + team + (brief ? "-brief" + brief : "") + ".html";
+
+    var blob = new Blob(["<!doctype html>\n" + clone.outerHTML], { type: "text/html;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    say("Exported " + name, true);
+  });
+
+  document.getElementById("btn-clear").addEventListener("click", function () {
+    if (!confirm("Clear every answer on this sheet? This cannot be undone.")) return;
+    fields.forEach(function (el) { if (el.type === "radio") el.checked = false; else el.value = ""; });
+    dropTotals();
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    say("Cleared", false);
+  });
+})();
+</script>
+</body>
+</html>
