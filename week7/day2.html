@@ -11,9 +11,20 @@
   <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="../assets/css/style.css" rel="stylesheet">
   <style>
-    html, body { height: 100%; }
-    body { display: flex; flex-direction: column; min-height: 100vh; }
-    main { flex: 1; }
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      flex: 1;
+    }
   </style>
 </head>
 
@@ -53,13 +64,62 @@
 
     <div class="container mb-5 animate-up delay-100">
       <div class="section-title mb-4">
-        <a href="./" style="color: var(--accent-teal-primary); font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">&larr; Back to Week 7</a>
+        <a href="./"
+          style="color: var(--accent-teal-primary); font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">&larr;
+          Back to Week 7</a>
       </div>
 
-      <div class="text-center" style="padding: 60px 20px; color: #777;">
-        <i class="ri-time-line" style="font-size: 48px; color: var(--accent-teal-primary);"></i>
-        <h3 style="margin-top: 16px;">Materials coming soon</h3>
-        <p>Slides and labs for this day will be posted here once available.</p>
+      <div class="table-container">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 20%">Type</th>
+              <th scope="col">Description</th>
+              <th scope="col" style="width: 18%; text-align: center;">Resource</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong><i class="ri-slideshow-3-line"
+                    style="color: var(--accent-teal-primary); margin-right: 6px;"></i>Slides</strong></td>
+              <td>Lecture slides for Day 2: Internet of Things (IoT) Workshop</td>
+              <td class="text-center"><a href="slides/iot-workshop-day2.pdf" target="_blank" class="table-btn">Open</a>
+              </td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td><strong><i class="ri-flask-line"
+                    style="color: var(--accent-teal-primary); margin-right: 6px;"></i>Lab</strong></td>
+              <td>02 Analog Inputs (ADC) <span style="color:#888; font-size:13px;">(Slide 8)</span></td>
+              <td class="text-center"><a href="https://esp32-projects.abdeljabar.net/Code/Project_2_ESP32_Analog_Inputs/" target="_blank" class="table-btn">Open</a></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td><strong><i class="ri-flask-line"
+                    style="color: var(--accent-teal-primary); margin-right: 6px;"></i>Lab</strong></td>
+              <td>03 PWM: Analog Output (LED Fade) <span style="color:#888; font-size:13px;">(Slide 19)</span></td>
+              <td class="text-center"><a href="https://esp32-projects.abdeljabar.net/Code/Project_3_ESP32_PWM/" target="_blank" class="table-btn">Open</a></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td><strong><i class="ri-flask-line"
+                    style="color: var(--accent-teal-primary); margin-right: 6px;"></i>Lab</strong></td>
+              <td>05 Switch Web Server (2 LEDs) <span style="color:#888; font-size:13px;">(Slide 33)</span></td>
+              <td class="text-center"><a href="https://esp32-projects.abdeljabar.net/Code/Project_5_ESP32_LED_Switch_Web_Server/" target="_blank" class="table-btn">Open</a></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td><strong><i class="ri-flask-line"
+                    style="color: var(--accent-teal-primary); margin-right: 6px;"></i>Lab</strong></td>
+              <td>Project 8 &mdash; Wi-Fi / Web <span style="color:#888; font-size:13px;">(Slide 42)</span></td>
+              <td class="text-center"><a href="https://esp32-projects.abdeljabar.net/Code/Project_8_Output_State_Synchronization_Web_Server/" target="_blank" class="table-btn">Open</a></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </main>
@@ -76,7 +136,7 @@
           Recording and uploading lectures online is not permitted.
         </div>
         <div class="credits" style="font-size: 14px; margin-top: 5px; color: #555;">
-          Website created by  <strong>Sattam Altwaim</strong>
+          Website created by <strong>Sattam Altwaim</strong>
         </div>
       </div>
     </div>

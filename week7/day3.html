@@ -11,9 +11,20 @@
   <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="../assets/css/style.css" rel="stylesheet">
   <style>
-    html, body { height: 100%; }
-    body { display: flex; flex-direction: column; min-height: 100vh; }
-    main { flex: 1; }
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      flex: 1;
+    }
   </style>
 </head>
 
@@ -53,13 +64,62 @@
 
     <div class="container mb-5 animate-up delay-100">
       <div class="section-title mb-4">
-        <a href="./" style="color: var(--accent-teal-primary); font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">&larr; Back to Week 7</a>
+        <a href="./"
+          style="color: var(--accent-teal-primary); font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">&larr;
+          Back to Week 7</a>
       </div>
 
-      <div class="text-center" style="padding: 60px 20px; color: #777;">
-        <i class="ri-time-line" style="font-size: 48px; color: var(--accent-teal-primary);"></i>
-        <h3 style="margin-top: 16px;">Materials coming soon</h3>
-        <p>Slides and labs for this day will be posted here once available.</p>
+      <div class="table-container">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 20%">Type</th>
+              <th scope="col">Description</th>
+              <th scope="col" style="width: 18%; text-align: center;">Resource</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong><i class="ri-slideshow-3-line"
+                    style="color: var(--accent-teal-primary); margin-right: 6px;"></i>Slides</strong></td>
+              <td>Lecture slides for Day 3: Internet of Things (IoT) Workshop</td>
+              <td class="text-center"><a href="slides/iot-workshop-day3.pdf" target="_blank" class="table-btn">Open</a>
+              </td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td><strong><i class="ri-flask-line"
+                    style="color: var(--accent-teal-primary); margin-right: 6px;"></i>Lab</strong></td>
+              <td>04 PIR Motion Sensor + Buzzer <span style="color:#888; font-size:13px;">(Slide 12)</span></td>
+              <td class="text-center"><a href="https://esp32-projects.abdeljabar.net/Code/Project_4_ESP32_PIR_Motion_Sensor/" target="_blank" class="table-btn">Open</a></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td><strong><i class="ri-flask-line"
+                    style="color: var(--accent-teal-primary); margin-right: 6px;"></i>Lab</strong></td>
+              <td>06 RGB LED Web Server (Color Picker) <span style="color:#888; font-size:13px;">(Slide 17)</span></td>
+              <td class="text-center"><a href="https://esp32-projects.abdeljabar.net/Code/Project_6_RGB_LED_Web_Server/" target="_blank" class="table-btn">Open</a></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td><strong><i class="ri-flask-line"
+                    style="color: var(--accent-teal-primary); margin-right: 6px;"></i>Lab</strong></td>
+              <td>10 OLED Display (SSD1306) <span style="color:#888; font-size:13px;">(Slide 29)</span></td>
+              <td class="text-center"><a href="https://esp32-projects.abdeljabar.net/Code/Project_10_ESP32_OLED_Display/" target="_blank" class="table-btn">Open</a></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td><strong><i class="ri-links-line"
+                    style="color: var(--accent-teal-primary); margin-right: 6px;"></i>Resource</strong></td>
+              <td>Components Glossary <span style="color:#888; font-size:13px;">(Slide 37)</span></td>
+              <td class="text-center"><a href="https://esp32-projects.abdeljabar.net/Code/Reference_Components_Glossary/" target="_blank" class="table-btn">Open</a></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </main>
@@ -76,7 +136,7 @@
           Recording and uploading lectures online is not permitted.
         </div>
         <div class="credits" style="font-size: 14px; margin-top: 5px; color: #555;">
-          Website created by  <strong>Sattam Altwaim</strong>
+          Website created by <strong>Sattam Altwaim</strong>
         </div>
       </div>
     </div>
