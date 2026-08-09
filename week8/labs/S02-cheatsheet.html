@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S02 — Exercise reference</title>
+<style>
+:root {
+  --ink:      #14202a;
+  --ink-2:    #3d525f;
+  --muted:    #6d8593;
+  --line:     #c9d6de;
+  --line-2:   #e6edf1;
+  --paper:    #f4f7f9;
+  --card:     #ffffff;
+  --accent:   #0b6a87;
+  --hw:       #9a3455;
+  --hw-bg:    #fbe9ee;
+  --warn:     #8a5a00;
+  --warn-bg:  #fdf6e6;
+  --ok:       #1f6b45;
+  --ok-bg:    #edf6f1;
+  --f-ui:     "Segoe UI Variable Text", "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
+  --f-mono:   "Cascadia Mono", Consolas, ui-monospace, SFMono-Regular, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--f-ui); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 54rem; margin: 0 auto; padding: 1.4rem 1rem 4rem; }
+.bar { background: var(--accent); color: #fff; font-family: var(--f-mono);
+  font-size: .74rem; letter-spacing: .07em; text-transform: uppercase; font-weight: 600;
+  padding: .55rem .9rem; border-radius: 5px; }
+.mast { margin: 1.2rem 0 .2rem; }
+.eyebrow { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600; }
+h1 { font-size: 1.6rem; font-weight: 640; letter-spacing: -.02em; margin: .25rem 0 .35rem; }
+.sub { color: var(--ink-2); font-size: .93rem; }
+h2 { font-size: 1.02rem; font-weight: 640; margin: 1.9rem 0 .6rem;
+  padding-bottom: .3rem; border-bottom: 2px solid var(--ink); }
+h2 .n { font-family: var(--f-mono); font-size: .74rem; color: var(--accent);
+  border: 1px solid var(--line); border-radius: 3px; padding: .08rem .38rem;
+  margin-right: .45rem; vertical-align: .12em; }
+h3 { font-size: .88rem; font-weight: 640; margin: 1.1rem 0 .3rem; color: var(--accent);
+  font-family: var(--f-mono); letter-spacing: .04em; text-transform: uppercase; }
+p { margin: .5rem 0; }
+ul, ol { margin: .45rem 0; padding-left: 1.15rem; }
+li { margin: .28rem 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--accent);
+  border-radius: 6px; padding: .85rem 1rem; margin: .8rem 0; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin: .8rem 0; }
+.tile { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: .8rem .9rem; }
+.tile h4 { margin: 0 0 .35rem; font-size: .82rem; font-family: var(--f-mono);
+  letter-spacing: .05em; text-transform: uppercase; }
+.tile.good { border-top: 3px solid var(--ok); }
+.tile.good h4 { color: var(--ok); }
+.tile.bad  { border-top: 3px solid var(--hw); }
+.tile.bad h4 { color: var(--hw); }
+.tile ul { margin: 0; padding-left: 1rem; font-size: .9rem; }
+.form { font-family: var(--f-mono); font-size: .9rem; background: var(--card);
+  border: 1px solid var(--line); border-radius: 5px; padding: .7rem .85rem; margin: .6rem 0; }
+.form b { color: var(--accent); }
+.eqn { background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+  padding: .8rem .95rem; margin: .7rem 0; }
+.eqn .k { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.eqn .e { font-size: 1.15rem; text-align: center; margin: .5rem 0; font-family: Georgia, "Times New Roman", serif; }
+.eqn .e i { font-style: italic; }
+.eqn dl { display: grid; grid-template-columns: 3.2rem 1fr; gap: .2rem .7rem;
+  margin: .4rem 0 0; font-size: .85rem; }
+.eqn dt { font-family: var(--f-mono); color: var(--accent); font-weight: 600; }
+.eqn dd { margin: 0; color: var(--ink-2); }
+.steps { counter-reset: s; }
+.st { display: grid; grid-template-columns: 1.9rem 1fr; gap: .7rem; margin: .7rem 0; }
+.st .i { font-family: var(--f-mono); font-weight: 700; color: #fff; background: var(--accent);
+  border-radius: 4px; text-align: center; height: 1.5rem; line-height: 1.5rem; font-size: .82rem; }
+.ref { background: var(--warn-bg); border-left: 3px solid var(--warn);
+  padding: .6rem .85rem; border-radius: 0 4px 4px 0; margin: .8rem 0; font-size: .9rem; }
+.hit { background: var(--ok-bg); border-left: 3px solid var(--ok);
+  padding: .6rem .85rem; border-radius: 0 4px 4px 0; margin: .8rem 0; font-size: .9rem; }
+.scroll { overflow-x: auto; margin: .6rem 0; }
+table { border-collapse: collapse; width: 100%; font-size: .87rem; min-width: 30rem; }
+th { text-align: left; font-family: var(--f-mono); font-size: .68rem; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600;
+  border-bottom: 2px solid var(--ink); padding: .3rem .45rem; }
+td { padding: .4rem .45rem; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+.foot { margin-top: 2.6rem; padding-top: .9rem; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: .83rem; }
+@media (max-width: 40rem) { .grid2 { grid-template-columns: 1fr; } }
+@media print {
+  body { background: #fff; font-size: 10.5pt; }
+  .wrap { max-width: none; padding: 0; }
+  .bar { background: #fff; color: var(--accent); border: 1px solid var(--accent); }
+  h2 { break-after: avoid; } .card, .tile, .eqn { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="bar">S02 · exercise reference · keep this open beside your sheets</div>
+
+<div class="mast">
+  <div class="eyebrow">Session S02</div>
+  <h1>Requirements, screening and the matrix</h1>
+  <div class="sub">Everything you need for the exercise, on one page. <b>There are no answers here</b> —
+  the answers depend on your brief, and working them out is the exercise. Your brief is inside the sheets.</div>
+</div>
+
+<h2><span class="n">01</span> What a requirement is</h2>
+<div class="form">
+  <b>subject</b> &nbsp;+&nbsp; <b>shall</b> &nbsp;+&nbsp; <b>a quantity with units</b> &nbsp;+&nbsp; <b>a way to verify it</b>
+</div>
+<p>If you cannot say how you would <i>test</i> it, it is not a requirement yet. The verification method is
+the part everyone forgets.</p>
+
+<div class="grid2">
+  <div class="tile bad">
+    <h4>Not a requirement</h4>
+    <ul>
+      <li>"Good battery life."</li>
+      <li>"Use a six-motor multirotor." <i>— a solution smuggled in</i></li>
+      <li>"Fly the survey quickly."</li>
+    </ul>
+  </div>
+  <div class="tile good">
+    <h4>A requirement</h4>
+    <ul>
+      <li>"Complete the survey and land with ≥ 20% battery, verified from the flight log."</li>
+      <li>"Remain controllable after any single motor failure, verified by a bench cut test."</li>
+      <li>"Cover 500 × 400 m at ≤ 3 cm/pixel in one sortie, verified by GSD measured on a ground target."</li>
+    </ul>
+  </div>
+</div>
+
+<div class="ref"><b>Write three. Only three.</b> They become the three rows of your matrix, so a requirement
+you would not score is a requirement you should not write. Then <b>rank them</b> — the ranking becomes your
+weights.</div>
+
+<h2><span class="n">02</span> Requirement or constraint?</h2>
+<div class="scroll">
+<table>
+<thead><tr><th></th><th>Requirement</th><th>Constraint</th></tr></thead>
+<tbody>
+<tr><td><b>It is</b></td><td>Something your design must <b>achieve</b></td><td>Something your design must <b>live inside</b></td></tr>
+<tr><td><b>Where from</b></td><td>You chose it, from the mission</td><td>You did not choose it and cannot argue with it</td></tr>
+<tr><td><b>What it does</b></td><td><b>Requirements score.</b> Rows of your matrix</td><td><b>Constraints filter.</b> They throw options out before scoring</td></tr>
+<tr><td><b>Example</b></td><td>"Shall cover the survey area on one battery"</td><td>"Budget ≤ $8,000" · "45 °C without shutdown"</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Seven places a constraint hides</h3>
+<p><b>Budget</b> (system cost, not airframe cost) · <b>Payload</b> (mass <i>and</i> power — both are given) ·
+<b>Crew</b> (how many, and what else they are doing) · <b>Launch &amp; recovery</b> <i>— read this row twice,
+it rules out more than any other</i> · <b>Environment</b> (wind, temperature, ground) · <b>Schedule</b> (time
+available) · <b>Transport</b> (how it reaches site, and who carries it).</p>
+
+<h2><span class="n">03</span> Turning a number in the brief into a requirement</h2>
+
+<div class="eqn">
+  <div class="k">Ground sample distance — what the camera can resolve</div>
+  <div class="e">GSD = <i>p</i> · <i>H</i> ⁄ <i>f</i> &nbsp;&nbsp;⟹&nbsp;&nbsp; <i>H</i> = GSD · <i>f</i> ⁄ <i>p</i></div>
+  <dl>
+    <dt>GSD</dt><dd>Ground distance one pixel covers — <b>the number in your brief</b></dd>
+    <dt>p</dt><dd>Pixel pitch on the sensor, typically 2–4 μm</dd>
+    <dt>f</dt><dd>Lens focal length, mm</dd>
+    <dt>H</dt><dd>Height above the ground — <b>the answer, not a choice</b></dd>
+  </dl>
+</div>
+<p><b>A resolution requirement is an altitude constraint in disguise.</b> Once the brief states a GSD, your
+flying height is decided for you.</p>
+
+<div class="eqn">
+  <div class="k">Coverage rate — what one aircraft can actually sweep</div>
+  <div class="e">Ȧ = <i>W</i> (1 − <i>s</i>) <i>V</i> &nbsp;&nbsp;&nbsp;&nbsp; <i>t</i> = <i>A</i><sub>total</sub> ⁄ Ȧ</div>
+  <dl>
+    <dt>Ȧ</dt><dd>Coverage rate — ground area swept per second, m²/s</dd>
+    <dt>W</dt><dd>Swath the camera sees across track. <b>W = GSD × pixels across</b></dd>
+    <dt>s</dt><dd>Side overlap. <b>60% overlap means you bank only 40%</b> of each pass</dd>
+    <dt>V</dt><dd>Ground speed — yours to choose, the only free variable</dd>
+    <dt>t</dt><dd>Flying time it demands — <b>the answer</b></dd>
+  </dl>
+</div>
+<p>Divide that flying time by a plausible endurance and you have the number of sorties — which is very often
+the thing that decides the configuration.</p>
+
+<h2><span class="n">04</span> The method: screen, then score</h2>
+<div class="steps">
+  <div class="st"><div class="i">1</div><div><b>Screen against your constraints.</b> Binary — pass or fail.
+  An option that violates a constraint is <b>out</b>; it does not get a score, it gets one line naming the
+  constraint that killed it. <b>Give all four classes a verdict</b>, including the ones you already know are
+  wrong: a blank row reads as a class you never considered.</div></div>
+  <div class="st"><div class="i">2</div><div><b>Score the survivors against your requirements.</b> Weighted.
+  Everything that got through screening is genuinely viable, so now you are asking which is <b>best</b>, not
+  which is <b>possible</b>.</div></div>
+</div>
+
+<div class="ref"><b>A weak fit is a low score, not an OUT.</b> "The wing is wasted on this mission" is a
+scoring argument. Only screen something out when a line of the brief makes it impossible.</div>
+
+<h3>The four classes</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>Class</th><th>What it gives you</th><th>What it costs</th></tr></thead>
+<tbody>
+<tr><td><b>Multirotor</b></td><td>Hovers, holds a point, lands on anything flat</td><td>Everything it does, it does on hover power</td></tr>
+<tr><td><b>Fixed-wing</b></td><td>Range and endurance nothing else comes near</td><td>Cannot stop. Needs a way up and a way down</td></tr>
+<tr><td><b>Helicopter</b></td><td>Best hover of any rotorcraft, and it cruises too</td><td>Mechanically complex, costly, maintained constantly</td></tr>
+<tr><td><b>VTOL hybrid</b></td><td>Wing range with vertical launch and recovery</td><td>You carry both systems and tune two flight regimes</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Filling the matrix</h3>
+<ul>
+  <li><b>Criteria</b> are your three requirements, one per row.</li>
+  <li><b>Weights</b> come from your own ranking — most important becomes 5.</li>
+  <li><b>Scores</b> are 1–5 against the criterion, judged by you and <b>defended by you</b>.</li>
+  <li><b>Total</b> only after every score is in. A margin of one or two points is <b>not a decision, it is a
+  tie</b> — when that happens, find the criterion you left out or challenge a weight, and say which you did.</li>
+</ul>
+
+<h2><span class="n">05</span> Three ways teams lose marks</h2>
+<div class="grid2">
+  <div class="tile bad"><h4>Decided first, scored backwards</h4>
+    <ul><li>Everyone does it and nobody notices.</li>
+    <li><b>Fix:</b> fill every score before you total anything. Have one person score a column without seeing the others.</li></ul></div>
+  <div class="tile bad"><h4>Every weight is a 3</h4>
+    <ul><li>If it all matters equally, the matrix is doing no work.</li>
+    <li><b>Fix:</b> you ranked your three requirements — use the ranking.</li></ul></div>
+</div>
+<div class="tile bad" style="margin-top:.8rem"><h4>No record of what you rejected</h4>
+  <ul><li>The report shows one option and one winner, which reads as a decision made before the exercise started.</li>
+  <li><b>Fix:</b> the rejections and their reasons <b>are marked as heavily as the choice</b>. Write them down as you go.</li></ul></div>
+
+<h2><span class="n">06</span> Before you hand it in</h2>
+<div class="hit"><b>Run this test on your own list.</b> If your three requirements would work just as well for
+somebody else's brief, they are <b>too vague to be requirements</b>. Three teams, three environments, three
+sets of numbers — your list should be unusable by anyone else in this room.</div>
+
+<h3>You will be asked these four at the review</h3>
+<ol>
+  <li>Your mission in one sentence, and what you chose</li>
+  <li>The option that was <b>hardest to reject</b>, and the constraint that killed it</li>
+  <li>The <b>weight</b> your answer is most sensitive to</li>
+  <li><b>What evidence would change your mind</b></li>
+</ol>
+<p>Question 4 is the one that matters. An engineer who cannot say what would change their mind has not made
+a decision — <b>they have expressed a preference.</b></p>
+
+<div class="foot">
+<b>S02 · exercise reference.</b> Two sheets to fill and export: <b>Sheets 1–2</b> requirements &amp; constraints,
+then <b>Sheet 3</b> screening &amp; the matrix — the graded half. Both must be exported. Autosave protects you
+against a closed tab, not against a different laptop.
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S01 — Exercise reference</title>
+<style>
+:root {
+  --ink:      #14202a;
+  --ink-2:    #3d525f;
+  --muted:    #6d8593;
+  --line:     #c9d6de;
+  --line-2:   #e6edf1;
+  --paper:    #f4f7f9;
+  --card:     #ffffff;
+  --accent:   #0b6a87;
+  --hw:       #9a3455;
+  --hw-bg:    #fbe9ee;
+  --warn:     #8a5a00;
+  --warn-bg:  #fdf6e6;
+  --ok:       #1f6b45;
+  --ok-bg:    #edf6f1;
+  --f-ui:     "Segoe UI Variable Text", "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
+  --f-mono:   "Cascadia Mono", Consolas, ui-monospace, SFMono-Regular, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--f-ui); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 54rem; margin: 0 auto; padding: 1.4rem 1rem 4rem; }
+.bar { background: var(--accent); color: #fff; font-family: var(--f-mono);
+  font-size: .74rem; letter-spacing: .07em; text-transform: uppercase; font-weight: 600;
+  padding: .55rem .9rem; border-radius: 5px; }
+.mast { margin: 1.2rem 0 .2rem; }
+.eyebrow { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600; }
+h1 { font-size: 1.6rem; font-weight: 640; letter-spacing: -.02em; margin: .25rem 0 .35rem; }
+.sub { color: var(--ink-2); font-size: .93rem; }
+h2 { font-size: 1.02rem; font-weight: 640; margin: 1.9rem 0 .6rem;
+  padding-bottom: .3rem; border-bottom: 2px solid var(--ink); }
+h2 .n { font-family: var(--f-mono); font-size: .74rem; color: var(--accent);
+  border: 1px solid var(--line); border-radius: 3px; padding: .08rem .38rem;
+  margin-right: .45rem; vertical-align: .12em; }
+h3 { font-size: .88rem; font-weight: 640; margin: 1.1rem 0 .3rem; color: var(--accent);
+  font-family: var(--f-mono); letter-spacing: .04em; text-transform: uppercase; }
+p { margin: .5rem 0; }
+ul, ol { margin: .45rem 0; padding-left: 1.15rem; }
+li { margin: .28rem 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--accent);
+  border-radius: 6px; padding: .85rem 1rem; margin: .8rem 0; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin: .8rem 0; }
+.tile { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: .8rem .9rem; }
+.tile h4 { margin: 0 0 .35rem; font-size: .82rem; font-family: var(--f-mono);
+  letter-spacing: .05em; text-transform: uppercase; }
+.tile.good { border-top: 3px solid var(--ok); }
+.tile.good h4 { color: var(--ok); }
+.tile.bad  { border-top: 3px solid var(--hw); }
+.tile.bad h4 { color: var(--hw); }
+.tile ul { margin: 0; padding-left: 1rem; font-size: .9rem; }
+.form { font-family: var(--f-mono); font-size: .9rem; background: var(--card);
+  border: 1px solid var(--line); border-radius: 5px; padding: .7rem .85rem; margin: .6rem 0; }
+.form b { color: var(--accent); }
+.eqn { background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+  padding: .8rem .95rem; margin: .7rem 0; }
+.eqn .k { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.eqn .e { font-size: 1.15rem; text-align: center; margin: .5rem 0; font-family: Georgia, "Times New Roman", serif; }
+.eqn .e i { font-style: italic; }
+.eqn dl { display: grid; grid-template-columns: 3.2rem 1fr; gap: .2rem .7rem;
+  margin: .4rem 0 0; font-size: .85rem; }
+.eqn dt { font-family: var(--f-mono); color: var(--accent); font-weight: 600; }
+.eqn dd { margin: 0; color: var(--ink-2); }
+.steps { counter-reset: s; }
+.st { display: grid; grid-template-columns: 1.9rem 1fr; gap: .7rem; margin: .7rem 0; }
+.st .i { font-family: var(--f-mono); font-weight: 700; color: #fff; background: var(--accent);
+  border-radius: 4px; text-align: center; height: 1.5rem; line-height: 1.5rem; font-size: .82rem; }
+.ref { background: var(--warn-bg); border-left: 3px solid var(--warn);
+  padding: .6rem .85rem; border-radius: 0 4px 4px 0; margin: .8rem 0; font-size: .9rem; }
+.hit { background: var(--ok-bg); border-left: 3px solid var(--ok);
+  padding: .6rem .85rem; border-radius: 0 4px 4px 0; margin: .8rem 0; font-size: .9rem; }
+.scroll { overflow-x: auto; margin: .6rem 0; }
+table { border-collapse: collapse; width: 100%; font-size: .87rem; min-width: 30rem; }
+th { text-align: left; font-family: var(--f-mono); font-size: .68rem; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600;
+  border-bottom: 2px solid var(--ink); padding: .3rem .45rem; }
+td { padding: .4rem .45rem; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+.foot { margin-top: 2.6rem; padding-top: .9rem; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: .83rem; }
+@media (max-width: 40rem) { .grid2 { grid-template-columns: 1fr; } }
+@media print {
+  body { background: #fff; font-size: 10.5pt; }
+  .wrap { max-width: none; padding: 0; }
+  .bar { background: #fff; color: var(--accent); border: 1px solid var(--accent); }
+  h2 { break-after: avoid; } .card, .tile, .eqn { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="bar">S01 · exercise reference · keep this open beside your sheet</div>
+
+<div class="mast">
+  <div class="eyebrow">Session S01</div>
+  <h1>Choosing a configuration for a mission</h1>
+  <div class="sub">Everything from this session that the four-mission exercise actually uses.
+  <b>There are no answers here</b> — the reasoning is what is being asked for, and one of the four missions
+  has no clean answer at all. Nothing in this session is graded.</div>
+</div>
+
+<h2><span class="n">01</span> The four configuration classes</h2>
+<div class="scroll">
+<table>
+<thead><tr><th>Class</th><th>How it holds itself up</th><th>What it gives you</th><th>What it costs</th></tr></thead>
+<tbody>
+<tr><td><b>Multirotor</b></td><td>Four or more fixed-pitch rotors, thrust set by rpm</td><td>Hovers, holds a point, lands on anything flat</td><td>Everything it does, it does on hover power</td></tr>
+<tr><td><b>Fixed-wing</b></td><td>A wing, in forward flight only</td><td>Range and endurance nothing else comes near</td><td>Cannot stop. Needs a way up and a way down</td></tr>
+<tr><td><b>Helicopter</b></td><td>One large rotor, variable pitch</td><td>Best hover of any rotorcraft, and it cruises too</td><td>Mechanically complex, costly, maintained constantly</td></tr>
+<tr><td><b>VTOL hybrid</b></td><td>A wing <i>plus</i> lift rotors or tilts</td><td>Wing range with vertical launch and recovery</td><td>You carry both systems and tune two flight regimes</td></tr>
+</tbody>
+</table>
+</div>
+<div class="ref">Four <b>classes</b>, not four products. They are not four different kinds of physics — they are
+the same airfoil used two different ways. A wing is one flown forward; a rotor is one spun in a circle; a
+VTOL carries both.</div>
+
+<h2><span class="n">02</span> The two facts every argument comes back to</h2>
+<div class="grid2">
+  <div class="tile">
+    <h4>Hovering is expensive</h4>
+    <p style="margin:.3rem 0">A rotor holds you up by throwing air downwards, continuously, for as long as
+    you are up there.</p>
+    <div class="eqn" style="margin:.5rem 0 0"><div class="e" style="font-size:1.05rem">P<sub>hover</sub> ∝ <i>W</i><sup>3⁄2</sup> ⁄ √<i>A</i></div>
+    <dl><dt>P</dt><dd>Power to hover</dd><dt>W</dt><dd>Weight</dd><dt>A</dt><dd>Total disc area</dd></dl></div>
+    <p style="margin:.5rem 0 0;font-size:.9rem">Heavier costs <b>more than proportionally</b>. Bigger discs
+    cost less — double the disc area and you save about 30% of the hover power at the same weight.</p>
+  </div>
+  <div class="tile">
+    <h4>A wing is not</h4>
+    <p style="margin:.3rem 0">A wing holds you up by moving forward. You stop paying for weight and start
+    paying only for <b>drag</b>.</p>
+    <div class="eqn" style="margin:.5rem 0 0"><div class="e" style="font-size:1.05rem"><i>L</i> = ½ ρ <i>V</i><sup>2</sup> <i>S</i> C<sub>L</sub> &nbsp;&nbsp; <i>T</i> = <i>W</i> ⁄ (<i>L</i>/<i>D</i>)</div>
+    <dl><dt>L</dt><dd>Lift</dd><dt>ρ</dt><dd>Air density</dd><dt>V</dt><dd>Airspeed</dd><dt>S</dt><dd>Wing area</dd><dt>C<sub>L</sub></dt><dd>Lift coefficient — set by angle of attack</dd><dt>L/D</dt><dd>Lift-to-drag ratio</dd></dl></div>
+    <p style="margin:.5rem 0 0;font-size:.9rem">A lift-to-drag ratio of 12 means <b>one twelfth of your
+    weight in thrust</b> keeps you up. A rotor gets no such discount.</p>
+  </div>
+</div>
+<div class="hit">A wing covers far more ground per joule; a rotor can stop.
+<b>Every configuration argument is those two facts in tension.</b></div>
+
+<h2><span class="n">03</span> The three questions that decide a configuration</h2>
+<div class="steps">
+  <div class="st"><div class="i">1</div><div><b>Where does it launch from, and what catches it coming back?</b>
+  A runway, a catapult, somebody's arm. Every one of those is a <i>site</i> constraint — and it usually decides
+  the aircraft before any performance number is considered.</div></div>
+  <div class="st"><div class="i">2</div><div><b>Does the job need the aircraft to stop?</b>
+  Inspection and search do. Delivery and wide-area survey do not. That single question splits the
+  configurations cleanly in half, and it is answered by the mission, never by the engineer.</div></div>
+  <div class="st"><div class="i">3</div><div><b>What happens if you lose it?</b>
+  An airframe you accept losing stops needing a recovery system at all. An airframe you cannot afford to lose
+  buys redundancy with mass.</div></div>
+</div>
+<div class="ref">Not one of those three is about top speed, endurance or payload. Those matter — but they come
+<b>later</b>, and you cannot size an aircraft until you know what kind of aircraft it is.</div>
+
+<h2><span class="n">04</span> What to write for each mission</h2>
+<ul>
+  <li><b>The configuration class</b> you would fly.</li>
+  <li><b>The single constraint that decided it</b> — one sentence, no more. If you need three sentences, you
+  have not found the constraint yet.</li>
+  <li><b>What you rejected, and what killed it.</b> Where an obvious alternative exists, say why it lost.</li>
+</ul>
+<div class="hit"><b>One of the four is genuinely arguable.</b> Find it, and say what extra information would
+settle it. For that one, ask yourself whether <i>two aircraft</i> is a better answer than any single aircraft.</div>
+
+<h2><span class="n">05</span> You will be asked these four</h2>
+<ol>
+  <li>Which class you picked</li>
+  <li>The one constraint that decided it</li>
+  <li>What you rejected, and what killed it</li>
+  <li><b>What would change your mind</b></li>
+</ol>
+<p>Question 4 is the one that matters. An engineer who cannot say what would change their mind has not made
+a decision — <b>they have expressed a preference.</b></p>
+
+<div class="foot">
+<b>S01 · exercise reference.</b> Nothing in this session is graded — it is orientation, and the reasoning is
+what you will need in S02, on a mission that <i>is</i> marked. Fill and export
+<b>s01-missions.html</b>; autosave protects you against a closed tab, not against a different laptop.
+</div>
+
+</div>
+</body>
+</html>
