@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S01 — Four Missions · you choose the configuration</title>
+<style>
+/* KGSP Drones — fillable deliverable. Screen-first, not print-first.
+   Self-contained on purpose: no external CSS, no font CDN, no script file.
+   The Export button writes a copy of THIS document with the answers baked
+   in as attributes, so the exported file opens correctly anywhere, offline,
+   with no dependency on this folder. That only works if everything is
+   inline — do not factor the CSS out into a shared file. */
+:root {
+  --ink:      #14202a;
+  --ink-2:    #3d525f;
+  --muted:    #6d8593;
+  --line:     #c9d6de;
+  --line-2:   #e6edf1;
+  --field:    #ffffff;
+  --field-bd: #b6c6d0;
+  --paper:    #f4f7f9;
+  --card:     #ffffff;
+  --accent:   #0b6a87;
+  --hw:       #9a3455;
+  --warn:     #8a5a00;
+  --warn-bg:  #fdf6e6;
+  --ok:       #1f6b45;
+  --ok-bg:    #edf6f1;
+  --f-ui:     "Segoe UI Variable Text", "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
+  --f-mono:   "Cascadia Mono", Consolas, ui-monospace, SFMono-Regular, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e8eff3; --ink-2: #b9c9d3; --muted: #8ba0ad;
+    --line: #2b3a45; --line-2: #223039;
+    --field: #131c23; --field-bd: #354854;
+    --paper: #0d151b; --card: #111b22;
+    --accent: #58c0e0; --hw: #e06a8c; --warn: #d8a23f; --warn-bg: #241d0f;
+    --ok: #5cc48d; --ok-bg: #10231a;
+  }
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body {
+  margin: 0;
+  font-family: var(--f-ui);
+  color: var(--ink);
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+.wrap { max-width: 60rem; margin: 0 auto; padding: 1.5rem 1.1rem 5rem; }
+
+/* ── Masthead ───────────────────────────────────────────────── */
+.mast { border-bottom: 2px solid var(--ink); padding-bottom: .8rem; }
+.eyebrow {
+  font-family: var(--f-mono); font-size: .7rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600;
+}
+h1 { font-size: 1.6rem; line-height: 1.15; margin: .35rem 0 .3rem; letter-spacing: -.02em; }
+.sub { font-size: .88rem; color: var(--muted); }
+.sub b { color: var(--ink-2); }
+
+/* ── Identity fields ────────────────────────────────────────── */
+.who { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 1rem; }
+.who label { flex: 1 1 12rem; }
+
+/* ── Sections ───────────────────────────────────────────────── */
+section {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 1rem 1.1rem 1.1rem;
+  margin-top: 1.1rem;
+}
+section > h2 {
+  font-size: 1rem; margin: 0 0 .15rem; letter-spacing: -.01em;
+  display: flex; align-items: baseline; gap: .55rem; flex-wrap: wrap;
+}
+.n {
+  font-family: var(--f-mono); font-size: .72rem; color: var(--accent);
+  font-weight: 700; letter-spacing: .1em; flex: none;
+}
+.hint { font-size: .84rem; color: var(--muted); margin: .1rem 0 .7rem; }
+.hint b { color: var(--ink-2); }
+
+/* ── Form controls ──────────────────────────────────────────── */
+label { display: block; font-size: .78rem; color: var(--muted); font-weight: 600;
+        letter-spacing: .01em; margin-bottom: .28rem; }
+input[type=text], input[type=number], textarea {
+  width: 100%; font: inherit; font-size: .92rem; color: var(--ink);
+  background: var(--field); border: 1px solid var(--field-bd);
+  border-radius: 4px; padding: .5rem .6rem;
+}
+textarea { resize: vertical; min-height: 4.2rem; line-height: 1.45; }
+input:focus, textarea:focus {
+  outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent);
+}
+/* The toolbar is sticky at the bottom, so a field scrolled into view on focus
+   can land underneath it — worst on a phone with the keyboard up. scroll-margin
+   reserves the bar's height whenever the browser scrolls to a field. */
+input, textarea { scroll-margin-bottom: 5.5rem; }
+section:last-of-type { margin-bottom: 2.5rem; }
+.row { display: grid; gap: .9rem; margin-top: .8rem; }
+@media (min-width: 42rem) { .row.two { grid-template-columns: 1fr 1fr; }
+                            .row.three { grid-template-columns: 1fr 1fr 1fr; }
+                            .row.sider { grid-template-columns: 13rem 1fr; } }
+
+/* ── Choice chips (radio) ───────────────────────────────────── */
+.picks { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .15rem; }
+.pick { flex: 1 1 9rem; }
+.pick input { position: absolute; opacity: 0; pointer-events: none; }
+.pick span {
+  display: block; cursor: pointer; text-align: left;
+  border: 1px solid var(--field-bd); background: var(--field);
+  border-radius: 5px; padding: .5rem .65rem; font-size: .88rem; font-weight: 600;
+}
+.pick span i { display: block; font-style: normal; font-weight: 400;
+               font-size: .76rem; color: var(--muted); margin-top: .12rem; line-height: 1.35; }
+.pick input:checked + span {
+  border-color: var(--accent); background: var(--ok-bg);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+.pick input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* ── Reference block: given, not chosen → amber ─────────────── */
+.ref {
+  background: var(--warn-bg); border: 1px solid var(--line);
+  border-left: 3px solid var(--warn); border-radius: 5px;
+  padding: .7rem .85rem; margin-top: .85rem; font-size: .84rem; color: var(--ink-2);
+}
+.ref h3 { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--warn); margin: 0 0 .4rem; font-weight: 700; }
+.ref table { border-collapse: collapse; font-size: .84rem; margin-top: .1rem; }
+.ref td { padding: .12rem .9rem .12rem 0; }
+.ref td:first-child { font-family: var(--f-mono); color: var(--ink); font-weight: 600; }
+.ref code { font-family: var(--f-mono); background: none; color: var(--ink); font-weight: 600; }
+
+/* ── Tags ───────────────────────────────────────────────────── */
+.tag { font-family: var(--f-mono); font-size: .64rem; letter-spacing: .1em;
+       text-transform: uppercase; padding: .12rem .4rem; border-radius: 3px;
+       font-weight: 700; flex: none; }
+.tag.core    { color: var(--ok);   background: var(--ok-bg); }
+.tag.stretch { color: var(--warn); background: var(--warn-bg); }
+section.stretch { border-left-color: var(--warn); }
+section.readback { border-left-color: var(--ok); }
+
+/* ── Toolbar ────────────────────────────────────────────────── */
+.bar {
+  position: sticky; bottom: 0; margin-top: 1.4rem;
+  background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+  padding: .7rem .85rem; display: flex; align-items: center; gap: .7rem; flex-wrap: wrap;
+  box-shadow: 0 -2px 14px rgba(0,0,0,.07);
+}
+button {
+  font: inherit; font-size: .88rem; font-weight: 600; cursor: pointer;
+  border-radius: 5px; padding: .5rem .95rem; border: 1px solid var(--field-bd);
+  background: var(--field); color: var(--ink);
+}
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+button:hover { filter: brightness(1.06); }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.status { font-size: .8rem; color: var(--muted); margin-left: auto; }
+.status.ok { color: var(--ok); }
+
+.foot { margin-top: 1.2rem; font-size: .78rem; color: var(--muted); }
+
+/* ── Exported copy ──────────────────────────────────────────── */
+body.exported .bar, body.exported .no-export { display: none; }
+body.exported input, body.exported textarea {
+  background: transparent; border-color: var(--line-2); color: var(--ink);
+}
+body.exported .pick input:not(:checked) + span { opacity: .35; }
+.stamp {
+  display: none; background: var(--ok-bg); border: 1px solid var(--ok);
+  border-radius: 5px; padding: .55rem .8rem; margin-top: 1rem;
+  font-size: .84rem; color: var(--ink-2);
+}
+body.exported .stamp { display: block; }
+
+/* ══ Added for the sheets that carry tables ══════════════════════
+   Everything above this line is byte-identical to s03-airframe.html,
+   the approved prototype, so the two can still be diffed. */
+
+/* ── Reflowing grid table ───────────────────────────────────────
+   Not a <table>. On a phone every cell stacks and carries its own
+   label; at 46rem the labels hide and a header row appears, so the
+   same markup is a form on a phone and a table on a laptop. The
+   column template is per-sheet content, passed in as --cols, which
+   is what keeps this CSS block identical across every sheet. */
+.gt { margin-top: .85rem; }
+.gt-h { display: none; }
+.gt-r {
+  display: grid; gap: .55rem; padding: .75rem 0;
+  border-top: 1px solid var(--line-2);
+}
+.gt-r:first-of-type { border-top: 0; padding-top: .35rem; }
+.gt-c > span {
+  display: block; font-size: .72rem; color: var(--muted);
+  font-weight: 600; margin-bottom: .26rem;
+}
+.gt-k { font-family: var(--f-mono); font-weight: 700; color: var(--accent); font-size: .9rem; }
+.gt-c .fix { font-size: .86rem; font-weight: 600; color: var(--ink); }
+.gt-c .fix i { display: block; font-style: normal; font-weight: 400;
+               font-size: .74rem; color: var(--muted); line-height: 1.35; }
+@media (min-width: 46rem) {
+  .gt-h, .gt-r { grid-template-columns: var(--cols, 1fr); }
+  .gt-h {
+    display: grid; gap: .55rem; padding-bottom: .4rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .gt-h > div { font-size: .72rem; color: var(--muted); font-weight: 600; }
+  .gt-h > div i { display: block; font-style: normal; font-weight: 400;
+                  font-size: .68rem; opacity: .85; line-height: 1.3; }
+  .gt-r { align-items: start; }
+  .gt-c > span { display: none; }
+}
+
+/* A binary verdict is two short chips, not two full-width ones. Inside a
+   narrow table column the 9rem flex-basis above wraps them onto separate
+   lines, which reads as two questions rather than one. Caught on a PNG. */
+.picks.vd { gap: .4rem; }
+.picks.vd .pick { flex: 1 1 3rem; }
+.picks.vd .pick span { text-align: center; padding: .5rem .3rem; }
+
+/* ── A genuinely two-dimensional table (the decision matrix) ────
+   Stacking this one would destroy it — the whole point is reading
+   across options. It scrolls inside its own box instead, so the
+   page itself never scrolls sideways. */
+.scroll { overflow-x: auto; margin-top: .85rem; }
+table.mtx { border-collapse: collapse; width: 100%; min-width: 33rem; }
+table.mtx th, table.mtx td {
+  border: 1px solid var(--line); padding: .3rem .35rem; text-align: left;
+  vertical-align: top;
+}
+table.mtx th { font-size: .7rem; color: var(--muted); font-weight: 600; }
+table.mtx th i { display: block; font-style: normal; font-weight: 400; opacity: .85; }
+table.mtx input { font-size: .85rem; padding: .35rem .4rem; }
+table.mtx td.id { font-family: var(--f-mono); font-weight: 700; color: var(--accent);
+                  font-size: .8rem; text-align: center; }
+table.mtx tr.tot td { background: var(--paper); font-size: .78rem; color: var(--muted); font-weight: 600; }
+table.mtx tr.tot td.sum { font-family: var(--f-mono); font-size: .95rem; color: var(--accent);
+                          font-weight: 700; text-align: center; }
+
+/* ── Computed output: only ever appears on a button press ──────
+   Never live. S02's first stated failure mode is deciding the answer
+   and scoring backwards, and a running total invites exactly that. */
+.out {
+  display: none; margin-top: .85rem; background: var(--ok-bg);
+  border: 1px solid var(--ok); border-left: 3px solid var(--ok);
+  border-radius: 5px; padding: .7rem .85rem; font-size: .86rem; color: var(--ink-2);
+}
+.out.show { display: block; }
+.out h3 { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .12em;
+          text-transform: uppercase; color: var(--ok); margin: 0 0 .4rem; font-weight: 700; }
+.out b { font-family: var(--f-mono); color: var(--ink); }
+.out .stale { color: var(--warn); font-weight: 600; }
+button.calc { margin-top: .85rem; }
+
+/* ── A quoted problem statement, or any given text ─────────────── */
+.brief {
+  font-size: .89rem; color: var(--ink-2); background: var(--paper);
+  border-radius: 5px; padding: .6rem .75rem; margin: .15rem 0 .2rem;
+}
+.brief b { color: var(--ink); }
+
+/* ── .bf — a collapsible mission brief ──────────────────────────────────
+   The briefs live inside the sheet the team is filling in, so nobody has to
+   be handed a separate document — and so a team cannot end up working from a
+   brief that has drifted from the one in the answer key. The markup between
+   the BRIEFS markers is GENERATED: edit handouts/briefs/briefs.data.mjs and
+   run handouts/briefs/build.mjs. Editing it here is overwritten.
+   Collapsed by default so the sheet still opens on the work, not the reading. */
+.bf { background: var(--card); border: 1px solid var(--line); border-radius: 6px; margin: .5rem 0; }
+.bf > summary {
+  cursor: pointer; padding: .7rem .85rem; display: flex; flex-wrap: wrap;
+  align-items: baseline; gap: .3rem .7rem; list-style: none; border-radius: 6px;
+}
+.bf > summary::-webkit-details-marker { display: none; }
+.bf > summary::before { content: "▸"; color: var(--accent); flex: none; }
+.bf[open] > summary::before { content: "▾"; }
+.bf[open] > summary { border-bottom: 1px solid var(--line-2); border-radius: 6px 6px 0 0; }
+.bf-id {
+  font-family: var(--f-mono); font-size: .72rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: #fff; background: var(--accent);
+  padding: .12rem .45rem; border-radius: 3px; flex: none;
+}
+.bf-t { font-weight: 640; }
+.bf-s { color: var(--muted); font-size: .8rem; margin-left: auto; }
+.bf-body { padding: .3rem 1rem 1rem; font-size: .92rem; }
+.bf-body h4 {
+  font-family: var(--f-mono); font-size: .74rem; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--accent); margin: .95rem 0 .3rem;
+}
+.bf-op { color: var(--ink-2); font-size: .85rem; }
+.bf-body ul { margin: .4rem 0; padding-left: 1.1rem; }
+.bf-body li { margin: .28rem 0; }
+.bf-n {
+  display: flex; flex-direction: column; gap: 1px;
+  background: var(--line-2); border: 1px solid var(--line-2);
+  border-radius: 4px; overflow: hidden;
+}
+.bf-r { display: grid; grid-template-columns: 13rem 1fr; gap: .7rem; background: var(--card); padding: .4rem .65rem; }
+.bf-k { font-weight: 600; }
+.bf-v { color: var(--ink-2); }
+.bf-w {
+  background: var(--warn-bg); border-left: 3px solid var(--warn);
+  padding: .55rem .75rem; border-radius: 0 4px 4px 0; margin-top: .8rem;
+}
+/* The brief must reflow rather than scroll — check.mjs fails the sheet on any
+   horizontal overflow at 390 px, and a two-column definition row is the thing
+   most likely to cause it. */
+@media (max-width: 46rem) {
+  .bf-r { grid-template-columns: 1fr; gap: .1rem; }
+  .bf-s { margin-left: 0; width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mast">
+    <div class="eyebrow">Session S01</div>
+    <h1>Four missions — you choose the configuration</h1>
+    <div class="sub">25 minutes · work as a team · <b>nobody is marking this one</b></div>
+    <div class="who">
+      <label>Team<input type="text" id="team" autocomplete="off"></label>
+      <label>Names<input type="text" id="names" autocomplete="off"></label>
+    </div>
+  </div>
+
+  <div class="stamp">Submitted copy — exported from the fillable sheet. Fields are a record and are no longer saved.</div>
+
+  <section>
+    <h2><span class="n">00</span> The four classes <span class="tag core">Reference</span></h2>
+    <p class="hint">These are the four you met in this session. Every mission below gets one of them — <b>including the missions where the answer feels obvious.</b></p>
+    <div class="ref">
+      <h3>Given — the four configuration classes</h3>
+      <table>
+        <tr><td>Multirotor</td><td>Four or more fixed rotors. Hovers; everything rides on hover power</td></tr>
+        <tr><td>Fixed-wing</td><td>A wing, forward flight only. Cannot stop; needs a way up and down</td></tr>
+        <tr><td>Helicopter</td><td>One rotor, variable pitch. Best hover there is, complex and costly</td></tr>
+        <tr><td>VTOL hybrid</td><td>Wing plus lift rotors. Wing range, vertical launch — and two systems to carry</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="n">01</span> Mission 1 · Film <span class="tag core">Core</span></h2>
+    <div class="brief">A crew wants a <b>six-minute continuous shot</b> following a car along a coast road at
+    80 km/h, then climbing away into a wide static view of the bay.</div>
+    <div class="picks">
+      <label class="pick"><input type="radio" name="m1" value="multirotor"><span>Multirotor</span></label>
+      <label class="pick"><input type="radio" name="m1" value="fixed-wing"><span>Fixed-wing</span></label>
+      <label class="pick"><input type="radio" name="m1" value="helicopter"><span>Helicopter</span></label>
+      <label class="pick"><input type="radio" name="m1" value="vtol"><span>VTOL hybrid</span></label>
+    </div>
+    <div class="row two">
+      <label>The one constraint that decided it<textarea id="m1_why"></textarea></label>
+      <label>What you rejected — and what killed it<textarea id="m1_rej"></textarea></label>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="n">02</span> Mission 2 · Pipeline <span class="tag core">Core</span></h2>
+    <div class="brief">Every kilometre of a <b>400 km gas pipeline</b>, photographed twice a year at
+    5 cm/pixel. Access roads run alongside for most of its length.</div>
+    <div class="picks">
+      <label class="pick"><input type="radio" name="m2" value="multirotor"><span>Multirotor</span></label>
+      <label class="pick"><input type="radio" name="m2" value="fixed-wing"><span>Fixed-wing</span></label>
+      <label class="pick"><input type="radio" name="m2" value="helicopter"><span>Helicopter</span></label>
+      <label class="pick"><input type="radio" name="m2" value="vtol"><span>VTOL hybrid</span></label>
+    </div>
+    <div class="row two">
+      <label>The one constraint that decided it<textarea id="m2_why"></textarea></label>
+      <label>What you rejected — and what killed it<textarea id="m2_rej"></textarea></label>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="n">03</span> Mission 3 · Port <span class="tag core">Core</span></h2>
+    <div class="brief">The <b>underside of every crane boom</b> in a container port checked for cracks,
+    close up, without stopping container movements.</div>
+    <div class="picks">
+      <label class="pick"><input type="radio" name="m3" value="multirotor"><span>Multirotor</span></label>
+      <label class="pick"><input type="radio" name="m3" value="fixed-wing"><span>Fixed-wing</span></label>
+      <label class="pick"><input type="radio" name="m3" value="helicopter"><span>Helicopter</span></label>
+      <label class="pick"><input type="radio" name="m3" value="vtol"><span>VTOL hybrid</span></label>
+    </div>
+    <div class="row two">
+      <label>The one constraint that decided it<textarea id="m3_why"></textarea></label>
+      <label>What you rejected — and what killed it<textarea id="m3_rej"></textarea></label>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="n">04</span> Mission 4 · Research <span class="tag core">Core</span></h2>
+    <div class="brief"><b>Three kilograms of samples</b> moved 40 km from a remote valley station to a
+    road head, twice a week, all year, in whatever weather turns up.</div>
+    <div class="picks">
+      <label class="pick"><input type="radio" name="m4" value="multirotor"><span>Multirotor</span></label>
+      <label class="pick"><input type="radio" name="m4" value="fixed-wing"><span>Fixed-wing</span></label>
+      <label class="pick"><input type="radio" name="m4" value="helicopter"><span>Helicopter</span></label>
+      <label class="pick"><input type="radio" name="m4" value="vtol"><span>VTOL hybrid</span></label>
+    </div>
+    <div class="row two">
+      <label>The one constraint that decided it<textarea id="m4_why"></textarea></label>
+      <label>What you rejected — and what killed it<textarea id="m4_rej"></textarea></label>
+    </div>
+  </section>
+
+  <section class="stretch">
+    <h2><span class="n">05</span> If you finish early <span class="tag stretch">Stretch</span></h2>
+    <p class="hint"><b>One of the four is genuinely arguable.</b> Find it.</p>
+    <div class="row two">
+      <label>Which one, and what makes it arguable?<textarea id="s_which"></textarea></label>
+      <label>What extra information would settle it?<textarea id="s_settle"></textarea></label>
+    </div>
+    <div class="row"><label>For that one — is <b>two aircraft</b> a better answer than any single aircraft?<textarea id="s_two"></textarea></label></div>
+  </section>
+
+  <section class="readback">
+    <h2><span class="n">06</span> Discussion — two minutes <span class="tag core">Core</span></h2>
+    <p class="hint">Pick <b>one</b> mission to talk about, and be ready with all four answers for it.</p>
+    <div class="row"><label>1 · Which class you picked<input type="text" id="rb1" autocomplete="off"></label></div>
+    <div class="row"><label>2 · The one constraint that decided it<input type="text" id="rb2" autocomplete="off"></label></div>
+    <div class="row"><label>3 · What you rejected, and what killed it<input type="text" id="rb3" autocomplete="off"></label></div>
+    <div class="row"><label>4 · What would change your mind<input type="text" id="rb4" autocomplete="off"></label></div>
+  </section>
+
+  <div class="bar no-export">
+    <button class="primary" id="btn-export" type="button">Export for submission</button>
+    <button id="btn-clear" type="button">Clear sheet</button>
+    <span class="status" id="status">Not saved yet</span>
+  </div>
+
+  <div class="foot no-export">
+    Your answers are saved in this browser automatically as you type — but that only protects you
+    against a closed tab. <b>Press “Export for submission” before the end of the session</b>; it
+    downloads a single file containing everything you have written, which is what gets marked.
+  </div>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var KEY = "kgsp-s01-missions-v1";
+  var STEM = "S01-missions-";
+  var status = document.getElementById("status");
+  var fields = Array.prototype.slice.call(
+    document.querySelectorAll("input[type=text], input[type=number], textarea, input[type=radio]")
+  );
+
+  function collect() {
+    var d = {};
+    fields.forEach(function (el) {
+      if (el.type === "radio") { if (el.checked) d["radio:" + el.name] = el.value; }
+      else if (el.id) { d[el.id] = el.value; }
+    });
+    return d;
+  }
+
+  function apply(d) {
+    fields.forEach(function (el) {
+      if (el.type === "radio") { el.checked = (d["radio:" + el.name] === el.value); }
+      else if (el.id && typeof d[el.id] === "string") { el.value = d[el.id]; }
+    });
+  }
+
+  // ── restore ──────────────────────────────────────────────────
+  try {
+    var saved = localStorage.getItem(KEY);
+    if (saved) { apply(JSON.parse(saved)); say("Restored from this browser", true); }
+  } catch (e) { say("Autosave unavailable — export often", false); }
+
+  // ── autosave, debounced ──────────────────────────────────────
+  var t = null;
+  function save() {
+    try {
+      localStorage.setItem(KEY, JSON.stringify(collect()));
+      say("Saved " + new Date().toLocaleTimeString(), true);
+    } catch (e) { say("Could not save — export now", false); }
+  }
+  function say(msg, ok) { status.textContent = msg; status.className = "status" + (ok ? " ok" : ""); }
+  fields.forEach(function (el) {
+    el.addEventListener("input", function () { clearTimeout(t); t = setTimeout(save, 400); });
+    el.addEventListener("change", save);
+  });
+
+  // ── totals, on demand only ───────────────────────────────────
+  // Any total on these sheets appears when asked for and disappears the
+  // moment an input changes underneath it, so a stale number can never be
+  // read as a current one. Nothing here computes the physics.
+  var outs = Array.prototype.slice.call(document.querySelectorAll(".out"));
+  var sums = Array.prototype.slice.call(document.querySelectorAll(".sum"));
+  function dropTotals() {
+    outs.forEach(function (o) { o.classList.remove("show"); });
+    sums.forEach(function (s) { s.textContent = "—"; });
+  }
+  fields.forEach(function (el) { el.addEventListener("input", dropTotals); });
+  // Nothing on this sheet is totalled or computed.
+
+  // ── export: bake the answers into a copy of this document ────
+  document.getElementById("btn-export").addEventListener("click", function () {
+    // Write the live values into ATTRIBUTES so a plain open of the file shows them.
+    fields.forEach(function (el) {
+      if (el.type === "radio") {
+        if (el.checked) el.setAttribute("checked", ""); else el.removeAttribute("checked");
+      } else if (el.tagName === "TEXTAREA") {
+        el.textContent = el.value;
+      } else {
+        el.setAttribute("value", el.value);
+      }
+    });
+    var clone = document.documentElement.cloneNode(true);
+    var s = clone.querySelector("script"); if (s) s.parentNode.removeChild(s);
+    clone.querySelector("body").classList.add("exported");
+    Array.prototype.forEach.call(clone.querySelectorAll("input, textarea"), function (el) {
+      el.setAttribute("readonly", "");
+      if (el.type === "radio") el.setAttribute("disabled", "");
+    });
+
+    var team = (document.getElementById("team").value || "team").trim().replace(/[^\w\-]+/g, "-");
+    var briefEl = document.getElementById("brief");
+    var brief = (briefEl ? briefEl.value : "").trim().replace(/[^\w\-]+/g, "");
+    var name = STEM + team + (brief ? "-brief" + brief : "") + ".html";
+
+    var blob = new Blob(["<!doctype html>\n" + clone.outerHTML], { type: "text/html;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    say("Exported " + name, true);
+  });
+
+  document.getElementById("btn-clear").addEventListener("click", function () {
+    if (!confirm("Clear every answer on this sheet? This cannot be undone.")) return;
+    fields.forEach(function (el) { if (el.type === "radio") el.checked = false; else el.value = ""; });
+    dropTotals();
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    say("Cleared", false);
+  });
+})();
+</script>
+</body>
+</html>
