@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S04 — Exercise reference</title>
+<style>
+:root {
+  --ink:      #14202a;
+  --ink-2:    #3d525f;
+  --muted:    #6d8593;
+  --line:     #c9d6de;
+  --line-2:   #e6edf1;
+  --paper:    #f4f7f9;
+  --card:     #ffffff;
+  --accent:   #0b6a87;
+  --hw:       #9a3455;
+  --hw-bg:    #fbe9ee;
+  --warn:     #8a5a00;
+  --warn-bg:  #fdf6e6;
+  --ok:       #1f6b45;
+  --ok-bg:    #edf6f1;
+  --f-ui:     "Segoe UI Variable Text", "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
+  --f-mono:   "Cascadia Mono", Consolas, ui-monospace, SFMono-Regular, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--f-ui); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 54rem; margin: 0 auto; padding: 1.4rem 1rem 4rem; }
+.bar { background: var(--accent); color: #fff; font-family: var(--f-mono);
+  font-size: .74rem; letter-spacing: .07em; text-transform: uppercase; font-weight: 600;
+  padding: .55rem .9rem; border-radius: 5px; }
+.mast { margin: 1.2rem 0 .2rem; }
+.eyebrow { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600; }
+h1 { font-size: 1.6rem; font-weight: 640; letter-spacing: -.02em; margin: .25rem 0 .35rem; }
+.sub { color: var(--ink-2); font-size: .93rem; }
+h2 { font-size: 1.02rem; font-weight: 640; margin: 1.9rem 0 .6rem;
+  padding-bottom: .3rem; border-bottom: 2px solid var(--ink); }
+h2 .n { font-family: var(--f-mono); font-size: .74rem; color: var(--accent);
+  border: 1px solid var(--line); border-radius: 3px; padding: .08rem .38rem;
+  margin-right: .45rem; vertical-align: .12em; }
+h3 { font-size: .88rem; font-weight: 640; margin: 1.1rem 0 .3rem; color: var(--accent);
+  font-family: var(--f-mono); letter-spacing: .04em; text-transform: uppercase; }
+p { margin: .5rem 0; }
+ul, ol { margin: .45rem 0; padding-left: 1.15rem; }
+li { margin: .28rem 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--accent);
+  border-radius: 6px; padding: .85rem 1rem; margin: .8rem 0; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin: .8rem 0; }
+.tile { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: .8rem .9rem; }
+.tile h4 { margin: 0 0 .35rem; font-size: .82rem; font-family: var(--f-mono);
+  letter-spacing: .05em; text-transform: uppercase; }
+.tile.good { border-top: 3px solid var(--ok); }
+.tile.good h4 { color: var(--ok); }
+.tile.bad  { border-top: 3px solid var(--hw); }
+.tile.bad h4 { color: var(--hw); }
+.tile ul { margin: 0; padding-left: 1rem; font-size: .9rem; }
+.form { font-family: var(--f-mono); font-size: .9rem; background: var(--card);
+  border: 1px solid var(--line); border-radius: 5px; padding: .7rem .85rem; margin: .6rem 0; }
+.form b { color: var(--accent); }
+.eqn { background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+  padding: .8rem .95rem; margin: .7rem 0; }
+.eqn .k { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.eqn .e { font-size: 1.15rem; text-align: center; margin: .5rem 0; font-family: Georgia, "Times New Roman", serif; }
+.eqn .e i { font-style: italic; }
+.eqn dl { display: grid; grid-template-columns: 3.2rem 1fr; gap: .2rem .7rem;
+  margin: .4rem 0 0; font-size: .85rem; }
+.eqn dt { font-family: var(--f-mono); color: var(--accent); font-weight: 600; }
+.eqn dd { margin: 0; color: var(--ink-2); }
+.steps { counter-reset: s; }
+.st { display: grid; grid-template-columns: 1.9rem 1fr; gap: .7rem; margin: .7rem 0; }
+.st .i { font-family: var(--f-mono); font-weight: 700; color: #fff; background: var(--accent);
+  border-radius: 4px; text-align: center; height: 1.5rem; line-height: 1.5rem; font-size: .82rem; }
+.ref { background: var(--warn-bg); border-left: 3px solid var(--warn);
+  padding: .6rem .85rem; border-radius: 0 4px 4px 0; margin: .8rem 0; font-size: .9rem; }
+.hit { background: var(--ok-bg); border-left: 3px solid var(--ok);
+  padding: .6rem .85rem; border-radius: 0 4px 4px 0; margin: .8rem 0; font-size: .9rem; }
+.scroll { overflow-x: auto; margin: .6rem 0; }
+table { border-collapse: collapse; width: 100%; font-size: .87rem; min-width: 30rem; }
+th { text-align: left; font-family: var(--f-mono); font-size: .68rem; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600;
+  border-bottom: 2px solid var(--ink); padding: .3rem .45rem; }
+td { padding: .4rem .45rem; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+.foot { margin-top: 2.6rem; padding-top: .9rem; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: .83rem; }
+@media (max-width: 40rem) { .grid2 { grid-template-columns: 1fr; } }
+@media print {
+  body { background: #fff; font-size: 10.5pt; }
+  .wrap { max-width: none; padding: 0; }
+  .bar { background: #fff; color: var(--accent); border: 1px solid var(--accent); }
+  h2 { break-after: avoid; } .card, .tile, .eqn { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="bar">S04 · exercise reference · keep this open beside your sheets</div>
+
+<div class="mast">
+  <div class="eyebrow">Session S04</div>
+  <h1>The sizing loop and the mass budget</h1>
+  <div class="sub">Everything you need for the exercise, on one page. <b>There are no answers here</b> —
+  the answers depend on your brief and on the airframe you chose in S03, and working them out is the exercise.
+  Your brief is inside both sheets.</div>
+</div>
+
+<h2><span class="n">01</span> Why this is a loop and not a sum</h2>
+<div class="scroll">
+<table>
+<thead><tr><th>Start here</th><th>And it follows that</th></tr></thead>
+<tbody>
+<tr><td><b>A heavier aircraft</b></td><td>needs more power to stay up</td></tr>
+<tr><td><b>More power</b></td><td>means more energy for the same endurance</td></tr>
+<tr><td><b>More energy</b></td><td>means a bigger battery — which means <i>a heavier aircraft</i></td></tr>
+</tbody>
+</table>
+</div>
+<p>To find your takeoff mass you need the battery mass. To find the battery mass you need the power. To find the
+power <b>you need the takeoff mass.</b> There is no order in which to do these once; you go round.</p>
+
+<h2><span class="n">02</span> The five steps, in order</h2>
+<div class="steps">
+  <div class="st"><div class="i">1</div><div><b>Guess a takeoff mass.</b> Any sensible number. The loop does not care how good the guess is, only that you are honest about what comes back.</div></div>
+  <div class="st"><div class="i">2</div><div><b>Pick a powertrain that can lift it.</b> Use <b>your own T/W target</b> and <b>your rotor count</b>, both from S03, to get the thrust each motor must produce. Then choose motor and propeller from the catalogue.</div></div>
+  <div class="st"><div class="i">3</div><div><b>Work out the power to stay up.</b> Hover power from the equation below, <i>plus your payload's power and the avionics</i>.</div></div>
+  <div class="st"><div class="i">4</div><div><b>Energy, then battery mass.</b> Power × endurance = energy. Energy ÷ <i>usable</i> specific energy = the mass of battery you must carry.</div></div>
+  <div class="st"><div class="i">5</div><div><b>Add it all up, then compare.</b> Structure + propulsion + battery + payload + avionics. <b>Does it match your guess?</b> If not, that answer is your next guess.</div></div>
+</div>
+<div class="ref"><b>Keep every pass, including the ones that did not work.</b> A sheet showing one pass is a guess
+written down neatly. The convergence — or the runaway — is the evidence you did this at all. And
+<b>do not round between passes</b>: carry the mass forward as it came out, or the loop will refuse to settle.</div>
+
+<h2><span class="n">03</span> The arithmetic</h2>
+<div class="eqn">
+  <div class="k">Hover power, including losses</div>
+  <div class="e"><i>P</i> = (<i>mg</i>)<sup>3⁄2</sup> ⁄ ( √(2<i>ρA</i>) · FM · <i>η</i> )</div>
+  <dl>
+    <dt>P</dt><dd>Electrical power, W. <b>Then add payload power and avionics</b></dd>
+    <dt>m</dt><dd>Takeoff mass, kg — the guess for this pass</dd>
+    <dt>g</dt><dd>9.81 m/s²</dd>
+    <dt>ρ</dt><dd>Air density, 1.225 kg/m³</dd>
+    <dt>A</dt><dd>Total disc area, m² — <b>every rotor added together</b></dd>
+    <dt>FM</dt><dd>Figure of merit, 0.65</dd>
+    <dt>η</dt><dd>Motor + ESC efficiency, 0.85</dd>
+  </dl>
+</div>
+<div class="eqn">
+  <div class="k">Energy, then battery mass</div>
+  <div class="e"><i>E</i> = <i>P</i><sub>total</sub> × <i>t</i> &nbsp;&nbsp;&nbsp;&nbsp; <i>m</i><sub>batt</sub> = <i>E</i> ⁄ (usable Wh/kg)</div>
+  <dl>
+    <dt>t</dt><dd>Endurance <b>in hours</b>. 25 minutes is 0.417 h</dd>
+    <dt>usable</dt><dd><b>80% of the stated Wh/kg.</b> You do not fly a pack flat</dd>
+  </dl>
+</div>
+<div class="hit"><b>Two things the equation is telling you.</b> Power rises with <b>mass to the power 1.5</b> —
+add 20% of mass and pay about 33% more power. And it falls with <b>√A</b> — that is S03's disc loading, and the
+propeller you chose is the largest single lever you have here.</div>
+<div class="ref">On an <b>X8</b>, your disc area is <b>four</b> propellers' worth, not eight — momentum theory
+sees the disc, not the motor. The coaxial interference loss comes off on top of that.</div>
+
+<h2><span class="n">04</span> The catalogue</h2>
+<h3>Motors — thrust at the stated propeller</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>Motor</th><th>Propeller</th><th>Thrust <i>per motor</i></th><th>Power</th><th>Mass</th></tr></thead>
+<tbody>
+<tr><td><b>M1</b></td><td>10 × 4.5</td><td>850 g</td><td>145 W</td><td>55 g</td></tr>
+<tr><td><b>M2</b></td><td>11 × 4.7</td><td>1050 g</td><td>190 W</td><td>68 g</td></tr>
+<tr><td><b>M3</b></td><td>13 × 4.4</td><td>1900 g</td><td>320 W</td><td>105 g</td></tr>
+<tr><td><b>M4</b></td><td>15 × 5.5</td><td>2600 g</td><td>430 W</td><td>165 g</td></tr>
+</tbody>
+</table>
+</div>
+<h3>Batteries — usable energy is 80% of stated</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>Battery</th><th>Type</th><th>Stated energy</th><th>Mass</th><th>Stated Wh/kg</th></tr></thead>
+<tbody>
+<tr><td><b>B1</b></td><td>LiPo 4S</td><td>74 Wh</td><td>480 g</td><td>154</td></tr>
+<tr><td><b>B2</b></td><td>LiPo 6S</td><td>111 Wh</td><td>700 g</td><td>159</td></tr>
+<tr><td><b>B3</b></td><td>Li-ion 6S</td><td>151 Wh</td><td>640 g</td><td>236</td></tr>
+<tr><td><b>B4</b></td><td>Li-ion 4S</td><td>151 Wh</td><td>660 g</td><td>229</td></tr>
+</tbody>
+</table>
+</div>
+<div class="ref"><b>Read the units twice.</b> The thrust column is <i>per motor</i>, and four motors on a
+quadcopter means four times the mass and four times the power. A team whose aircraft weighs 400 g has divided by
+four somewhere. <b>Usable energy is 80% of stated</b>, on every row.</div>
+<div class="hit"><b>Li-ion carries far more energy per kilogram and delivers far less peak current.</b> That is a
+real trade, not a free upgrade. If you pick B3 or B4 for a heavy aircraft, say what you checked about the
+discharge rate — the moment it matters is takeoff, not cruise.</div>
+
+<h2><span class="n">05</span> If your loop does not close</h2>
+<p>It happens, and it is not a mistake. Every extra gram of battery costs more power than the energy it carries
+buys back, and past a certain requirement <b>no number of passes brings it back</b>. There are three legitimate
+responses.</p>
+<div class="steps">
+  <div class="st"><div class="i">1</div><div><b>Grow the disc.</b> Power falls with √A. Bigger propellers, or more of them. Costs mass and folded size, but it attacks the problem at its source — this is the answer the physics likes.</div></div>
+  <div class="st"><div class="i">2</div><div><b>Change the chemistry.</b> Li-ion carries roughly 50% more energy per kilogram than LiPo, and will not give you the burst current a heavy aircraft wants at takeoff. Say which you traded.</div></div>
+  <div class="st"><div class="i">3</div><div><b>Go back to the requirement.</b> The endurance you were given may not be purchasable in this configuration at this budget. <b>Name the requirement, say what it costs, and propose the number that does close.</b></div></div>
+</div>
+<div class="hit"><b>Option 3 is not giving up.</b> A team that shows exactly what an extra ten minutes of
+endurance costs has done engineering. A team that quietly writes down a smaller battery — or a smaller payload —
+has not.</div>
+
+<h2><span class="n">06</span> The mass budget</h2>
+<div class="scroll">
+<table>
+<thead><tr><th>Row</th><th>What goes in it</th></tr></thead>
+<tbody>
+<tr><td><b>Structure</b></td><td>Frame, arms, landing gear, wiring, fasteners, and any guards</td></tr>
+<tr><td><b>Propulsion</b></td><td>Motors <i>and</i> ESCs <i>and</i> propellers — one set per rotor</td></tr>
+<tr><td><b>Battery</b></td><td>From your loop. Then check you can actually <b>buy</b> that mass in whole packs</td></tr>
+<tr><td><b>Payload</b></td><td>Off the brief. The brief also gives its <b>power</b>, which is not a mass row but decides how much battery is</td></tr>
+<tr><td><b>Avionics</b></td><td>Flight controller, GNSS, radio, and the wiring between them</td></tr>
+</tbody>
+</table>
+</div>
+<div class="ref"><b>They must sum to the takeoff mass you are claiming.</b> If they do not, saying <i>which</i>
+number is wrong is part of the answer — and a better answer than quietly adjusting one until it balances. The
+<b>Why</b> column is where component selection is actually assessed: one line per item, and "it was in the
+middle" is not a line.</div>
+
+<h2><span class="n">07</span> Three ways teams lose marks</h2>
+<div class="grid2">
+  <div class="tile bad"><h4>Payload power forgotten</h4>
+    <ul><li>The commonest miss in the whole course, flagged in three sessions.</li>
+    <li><b>Fix:</b> the brief gives a mass <i>and</i> a wattage. Both go in — one in the budget, one in the energy.</li></ul></div>
+  <div class="tile bad"><h4>One pass, written neatly</h4>
+    <ul><li>A single row is a guess, not a loop, and it is marked as one.</li>
+    <li><b>Fix:</b> keep every pass, including the ones heading the wrong way.</li></ul></div>
+</div>
+<div class="tile bad" style="margin-top:.8rem"><h4>An endurance your own budget does not support</h4>
+  <ul><li>Promising 25 minutes in one section and sizing for 15 in another is the gap the review asks about.</li>
+  <li><b>Fix:</b> write the endurance your sizing supports <b>next to</b> the one your brief demands. A gap is
+  not a failure. <b>An unexamined gap is.</b></li></ul></div>
+
+<h2><span class="n">08</span> Before you hand it in</h2>
+<div class="hit"><b>Check these four, in this order.</b> Payload power is in the energy. Thrust is per motor, not
+total. Usable energy is 80% of stated. Your rows sum to your claimed takeoff mass. Four checks, two minutes, and
+they catch most of what is lost above.</div>
+
+<h3>You will be asked these four at the design review</h3>
+<ol>
+  <li>Your <b>takeoff mass</b>, and the heaviest single line in your budget</li>
+  <li>The <b>endurance your sizing supports</b>, against the one your brief demands</li>
+  <li>Whether <b>S03's airframe survived</b> — and if not, what you changed</li>
+  <li>The number you are <b>least confident in</b></li>
+</ol>
+<p>Question 4 has followed you all week. In S01 it was <i>what would change your mind</i>; in S02, <i>what
+evidence would change your mind</i>; here it is <b>which of your own numbers do you distrust.</b> Naming one is
+the answer. Claiming there isn't one is not.</p>
+
+<div class="foot">
+<b>S04 · exercise reference.</b> Two sheets to fill and export: <b>Sheet 6</b> the sizing loop, then <b>Sheet 7</b>
+the mass budget and components. <b>Both must be exported</b> — they are separate files. Your brief is inside each
+of them, collapsed at the top. Autosave protects you against a closed tab, not against a different laptop.
+</div>
+
+</div>
+</body>
+</html>

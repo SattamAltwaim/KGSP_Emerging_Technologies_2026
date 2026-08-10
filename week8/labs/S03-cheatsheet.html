@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S03 — Exercise reference</title>
+<style>
+:root {
+  --ink:      #14202a;
+  --ink-2:    #3d525f;
+  --muted:    #6d8593;
+  --line:     #c9d6de;
+  --line-2:   #e6edf1;
+  --paper:    #f4f7f9;
+  --card:     #ffffff;
+  --accent:   #0b6a87;
+  --hw:       #9a3455;
+  --hw-bg:    #fbe9ee;
+  --warn:     #8a5a00;
+  --warn-bg:  #fdf6e6;
+  --ok:       #1f6b45;
+  --ok-bg:    #edf6f1;
+  --f-ui:     "Segoe UI Variable Text", "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
+  --f-mono:   "Cascadia Mono", Consolas, ui-monospace, SFMono-Regular, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--f-ui); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 54rem; margin: 0 auto; padding: 1.4rem 1rem 4rem; }
+.bar { background: var(--accent); color: #fff; font-family: var(--f-mono);
+  font-size: .74rem; letter-spacing: .07em; text-transform: uppercase; font-weight: 600;
+  padding: .55rem .9rem; border-radius: 5px; }
+.mast { margin: 1.2rem 0 .2rem; }
+.eyebrow { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600; }
+h1 { font-size: 1.6rem; font-weight: 640; letter-spacing: -.02em; margin: .25rem 0 .35rem; }
+.sub { color: var(--ink-2); font-size: .93rem; }
+h2 { font-size: 1.02rem; font-weight: 640; margin: 1.9rem 0 .6rem;
+  padding-bottom: .3rem; border-bottom: 2px solid var(--ink); }
+h2 .n { font-family: var(--f-mono); font-size: .74rem; color: var(--accent);
+  border: 1px solid var(--line); border-radius: 3px; padding: .08rem .38rem;
+  margin-right: .45rem; vertical-align: .12em; }
+h3 { font-size: .88rem; font-weight: 640; margin: 1.1rem 0 .3rem; color: var(--accent);
+  font-family: var(--f-mono); letter-spacing: .04em; text-transform: uppercase; }
+p { margin: .5rem 0; }
+ul, ol { margin: .45rem 0; padding-left: 1.15rem; }
+li { margin: .28rem 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--accent);
+  border-radius: 6px; padding: .85rem 1rem; margin: .8rem 0; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin: .8rem 0; }
+.tile { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: .8rem .9rem; }
+.tile h4 { margin: 0 0 .35rem; font-size: .82rem; font-family: var(--f-mono);
+  letter-spacing: .05em; text-transform: uppercase; }
+.tile.good { border-top: 3px solid var(--ok); }
+.tile.good h4 { color: var(--ok); }
+.tile.bad  { border-top: 3px solid var(--hw); }
+.tile.bad h4 { color: var(--hw); }
+.tile ul { margin: 0; padding-left: 1rem; font-size: .9rem; }
+.form { font-family: var(--f-mono); font-size: .9rem; background: var(--card);
+  border: 1px solid var(--line); border-radius: 5px; padding: .7rem .85rem; margin: .6rem 0; }
+.form b { color: var(--accent); }
+.eqn { background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+  padding: .8rem .95rem; margin: .7rem 0; }
+.eqn .k { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.eqn .e { font-size: 1.15rem; text-align: center; margin: .5rem 0; font-family: Georgia, "Times New Roman", serif; }
+.eqn .e i { font-style: italic; }
+.eqn dl { display: grid; grid-template-columns: 3.2rem 1fr; gap: .2rem .7rem;
+  margin: .4rem 0 0; font-size: .85rem; }
+.eqn dt { font-family: var(--f-mono); color: var(--accent); font-weight: 600; }
+.eqn dd { margin: 0; color: var(--ink-2); }
+.steps { counter-reset: s; }
+.st { display: grid; grid-template-columns: 1.9rem 1fr; gap: .7rem; margin: .7rem 0; }
+.st .i { font-family: var(--f-mono); font-weight: 700; color: #fff; background: var(--accent);
+  border-radius: 4px; text-align: center; height: 1.5rem; line-height: 1.5rem; font-size: .82rem; }
+.ref { background: var(--warn-bg); border-left: 3px solid var(--warn);
+  padding: .6rem .85rem; border-radius: 0 4px 4px 0; margin: .8rem 0; font-size: .9rem; }
+.hit { background: var(--ok-bg); border-left: 3px solid var(--ok);
+  padding: .6rem .85rem; border-radius: 0 4px 4px 0; margin: .8rem 0; font-size: .9rem; }
+.scroll { overflow-x: auto; margin: .6rem 0; }
+table { border-collapse: collapse; width: 100%; font-size: .87rem; min-width: 30rem; }
+th { text-align: left; font-family: var(--f-mono); font-size: .68rem; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600;
+  border-bottom: 2px solid var(--ink); padding: .3rem .45rem; }
+td { padding: .4rem .45rem; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+.foot { margin-top: 2.6rem; padding-top: .9rem; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: .83rem; }
+@media (max-width: 40rem) { .grid2 { grid-template-columns: 1fr; } }
+@media print {
+  body { background: #fff; font-size: 10.5pt; }
+  .wrap { max-width: none; padding: 0; }
+  .bar { background: #fff; color: var(--accent); border: 1px solid var(--accent); }
+  h2 { break-after: avoid; } .card, .tile, .eqn { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="bar">S03 · exercise reference · keep this open beside your sheet</div>
+
+<div class="mast">
+  <div class="eyebrow">Session S03</div>
+  <h1>Rotor count, thrust margin and size</h1>
+  <div class="sub">Everything you need for the exercise, on one page. <b>There are no answers here</b> —
+  the answers depend on your brief, and working them out is the exercise. Your brief is inside the sheet.</div>
+</div>
+
+<h2><span class="n">01</span> What a multirotor can actually control</h2>
+<p>It cannot change the pitch of its blades. <b>The only thing it can change is how fast each motor spins</b> —
+and out of that it has to produce four independent controls.</p>
+<div class="scroll">
+<table>
+<thead><tr><th>Control</th><th>How it is produced</th></tr></thead>
+<tbody>
+<tr><td><b>Height</b></td><td>Speed all of them up together</td></tr>
+<tr><td><b>Roll and pitch</b></td><td>Speed up one side, slow the other. The aircraft tilts, and the tilted thrust pushes it sideways — <b>a multirotor moves by leaning</b></td></tr>
+<tr><td><b>Yaw</b></td><td>Every spinning propeller drags the airframe the opposite way. Half spin each way and it cancels — until you speed one <i>diagonal pair</i> up</td></tr>
+</tbody>
+</table>
+</div>
+<div class="ref"><b>Four things to control, and each motor is one knob.</b> That single sentence decides more of this
+session than any equation on it. Count your knobs before you count your motors.</div>
+
+<h2><span class="n">02</span> Rotor count — what more of them buys and costs</h2>
+<div class="scroll">
+<table>
+<thead><tr><th>Layout</th><th>Rotors</th><th>Buys you</th><th>Costs you</th></tr></thead>
+<tbody>
+<tr><td><b>Quadcopter</b></td><td>4</td><td>Simplest, lightest, cheapest, most efficient for its size</td><td><b>Does not survive a motor failure</b> — three knobs cannot answer four demands</td></tr>
+<tr><td><b>Hexacopter</b></td><td>6</td><td>Survives one motor out, <i>given enough thrust margin</i></td><td>More mass, more cost, six ESCs and six arms</td></tr>
+<tr><td><b>Octocopter</b></td><td>8</td><td>Most tolerant. The layout for flying over what must not be hit</td><td>Heaviest and dearest, and large for its disc area</td></tr>
+<tr><td><b>X8 · coaxial</b></td><td>8 on 4 arms</td><td>Octo redundancy in a quad's footprint</td><td>Only <b>four discs</b>, and the lower propeller works in the upper one's wake — <b>≈ 15% less efficient</b></td></tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="n">03</span> Thrust-to-weight, and what a lean costs</h2>
+<div class="eqn">
+  <div class="k">Thrust margin</div>
+  <div class="e"><i>T</i> ⁄ <i>W</i> = <i>n</i> <i>T</i><sub>motor</sub> ⁄ <i>mg</i> &nbsp;&nbsp;&nbsp;&nbsp; <i>T</i><sub>needed</sub> = <i>mg</i> ⁄ cos <i>φ</i></div>
+  <dl>
+    <dt>T/W</dt><dd>Thrust-to-weight ratio, dimensionless. Each motor makes (T/W)·<i>mg</i>/<i>n</i></dd>
+    <dt>n</dt><dd>Rotor count</dd>
+    <dt>m, g</dt><dd>Takeoff mass in kg; 9.81 m/s²</dd>
+    <dt>φ</dt><dd><b>Lean angle.</b> At 30°, you need <b>15% more thrust</b> to hold height</dd>
+  </dl>
+</div>
+<div class="scroll">
+<table>
+<thead><tr><th>Ratio</th><th>What it is for</th></tr></thead>
+<tbody>
+<tr><td><b>1.5 : 1</b></td><td>Barely flyable. No reserve for gusts, no authority to correct an upset. Not a design point</td></tr>
+<tr><td><b>2 : 1</b></td><td>The normal target. Half holds you up, half is available to manoeuvre and fight wind</td></tr>
+<tr><td><b>2.5 : 1</b></td><td>Windy sites, precise position holding, recovery near a structure</td></tr>
+<tr><td><b>3 : 1 +</b></td><td>Aerobatic and racing. You are carrying motor mass a survey will never use</td></tr>
+</tbody>
+</table>
+</div>
+<div class="ref"><b>Wind is paid for out of your thrust margin.</b> A rotor tilted into a gust puts less of its
+thrust into holding you up. And if your aircraft carries a payload, <b>work the ratio out with the payload
+aboard</b> — an empty aircraft is a different aircraft.</div>
+
+<h2><span class="n">04</span> Surviving a motor failure</h2>
+<div class="eqn">
+  <div class="k">The thrust floor — where it comes from</div>
+  <div class="e"><i>T</i> ⁄ <i>W</i> ≥ <i>n</i> ⁄ (<i>n</i> − 1)</div>
+  <dl>
+    <dt>Why</dt><dd>Each motor makes (T/W)·<i>W</i>/<i>n</i>. Lose one and <i>n</i>−1 are left; together they must still hold up <i>W</i></dd>
+  </dl>
+</div>
+<div class="scroll">
+<table>
+<thead><tr><th>Rotors</th><th>Floor</th><th>What actually happens</th></tr></thead>
+<tbody>
+<tr><td><b>4</b></td><td>1.33</td><td><b>Does not survive</b>, and not for want of thrust. Three knobs, four demands — the autopilot abandons yaw and the aircraft spins</td></tr>
+<tr><td><b>6</b></td><td>1.20</td><td>Survives, <i>given sufficient margin</i>. Five left, each +20%</td></tr>
+<tr><td><b>8</b></td><td>1.14</td><td>Survives with margin to spare. Seven left, each +14%</td></tr>
+</tbody>
+</table>
+</div>
+<div class="hit"><b>"Redundant" is not a property of the rotor count alone.</b> It is a property of the rotor count
+<b>and the thrust margin together</b>. Six motors at 90% of hover thrust is T/W = 1.11, under the 1.20 floor, and
+it comes down exactly like a quadcopter.</div>
+
+<h2><span class="n">05</span> What it costs to hold an aircraft up</h2>
+<div class="eqn">
+  <div class="k">Hover power — momentum theory</div>
+  <div class="e"><i>P</i><sub>ideal</sub> = <i>T</i><sup>3⁄2</sup> ⁄ √(2<i>ρA</i>) &nbsp;&nbsp;&nbsp;&nbsp; <i>P</i> = <i>P</i><sub>ideal</sub> ⁄ (FM · <i>η</i>)</div>
+  <dl>
+    <dt>P</dt><dd>Hover power, W</dd>
+    <dt>T</dt><dd>Thrust, N. In hover <b>T = mg</b></dd>
+    <dt>A</dt><dd>Disc area — <b>every rotor added together</b>, m²</dd>
+    <dt>ρ</dt><dd>Air density, 1.225 kg/m³</dd>
+    <dt>FM, η</dt><dd>Figure of merit 0.65; motor and ESC efficiency 0.85</dd>
+  </dl>
+</div>
+<p><b>Power rises with weight to the power 1.5</b> — add 20% of mass and you pay about 33% more power. That is
+why mass is the thing S04 chases, and why adding a gram is never free.</p>
+
+<div class="eqn">
+  <div class="k">Disc loading — the same fact, named</div>
+  <div class="e">DL = <i>W</i> ⁄ <i>A</i> &nbsp;[N/m²] &nbsp;&nbsp;⟹&nbsp;&nbsp; <i>P</i> ⁄ <i>W</i> = (1 ⁄ FM) √(DL ⁄ 2<i>ρ</i>)</div>
+  <dl>
+    <dt>DL</dt><dd>Weight carried per m² of disc</dd>
+    <dt>P/W</dt><dd>Power per newton of aircraft. <b>Lower is better</b></dd>
+  </dl>
+</div>
+<div class="ref"><b>Halve the disc loading and you save about 30% of your hover power</b>, at exactly the same
+takeoff weight. Nothing else available to you is worth that much — which is why a survey multirotor looks
+nothing like a racing one.</div>
+
+<h2><span class="n">06</span> Propellers — why you cannot just fit bigger ones</h2>
+<div class="eqn">
+  <div class="k">Scaling laws</div>
+  <div class="e"><i>T</i> = <i>C<sub>T</sub></i> <i>ρ n</i>² <i>D</i>⁴ &nbsp;&nbsp;&nbsp;&nbsp; <i>P</i> = <i>C<sub>P</sub></i> <i>ρ n</i>³ <i>D</i>⁵</div>
+  <dl>
+    <dt>n</dt><dd><b>Revolutions per second</b> — not per minute</dd>
+    <dt>D</dt><dd>Propeller diameter, m</dd>
+    <dt>C<sub>T</sub></dt><dd>Thrust coefficient. Each blade is a wing going round at local airspeed <i>Ω·r</i></dd>
+  </dl>
+</div>
+<ul>
+  <li><b>Diameter wins whenever you have room.</b> D⁴ against n², so growing the disc beats spinning it faster.</li>
+  <li><b>Tip speed is π·D·n.</b> Past <b>200 m/s</b> the tips go transonic, so <b>a big propeller must turn
+  slowly.</b> This is the one hard physical limit in the session.</li>
+  <li>Bigger propellers also mean a bigger frame, a heavier motor, slower response to gusts — and they may
+  simply not fit your site.</li>
+</ul>
+
+<h2><span class="n">07</span> Arm layout</h2>
+<div class="scroll">
+<table>
+<thead><tr><th>Layout</th><th>What it is</th><th>When</th></tr></thead>
+<tbody>
+<tr><td><b>X</b></td><td>Arms at the corners. Nothing ahead of the camera, every motor works roll <i>and</i> pitch</td><td><b>The default.</b> Choose it deliberately, not by omission</td></tr>
+<tr><td><b>+</b></td><td>One arm forward, so a propeller sits in the shot</td><td>Rare on anything carrying a camera</td></tr>
+<tr><td><b>H</b></td><td>Twin booms, a clear bay down the centre. Heavier for the same span</td><td>When the payload is <i>long</i>, or needs the centre clear</td></tr>
+</tbody>
+</table>
+</div>
+<div class="ref"><b>Layout follows what you carry and where it must see</b>, far more often than it follows flight
+performance. Work out what your sensor must not have in front of it, and the layout usually chooses itself.</div>
+
+<h2><span class="n">08</span> Before you hand it in</h2>
+<div class="hit"><b>Run this test on your own answer.</b> Every number on your sheet — the rotor count, the
+thrust-to-weight target, the propeller diameter, the frame span — should be traceable to <b>a sentence in your
+brief</b>. If a number came from this page instead, it is not yet an answer.</div>
+<p><b>Three teams, three briefs, and there is no reason at all for you to arrive at the same airframe.</b> If two
+of you did, one of you has copied a default rather than read a brief.</p>
+
+<h3>You will be asked these four at the review</h3>
+<ol>
+  <li>The <b>one parameter</b> that decided your airframe</li>
+  <li>Your <b>rotor count and layout</b>, and what you rejected</li>
+  <li>Your <b>thrust-to-weight target</b>, and where it came from</li>
+  <li><b>What happens to your aircraft when one motor stops</b></li>
+</ol>
+<p>Question 4 is the one that gets pressed. "It's a hexacopter, so it's fine" is not an answer — the follow-up
+is <i>what is your thrust margin</i>, and the floor for six rotors is 1.20.</p>
+
+<div class="foot">
+<b>S03 · exercise reference.</b> One sheet to fill and export: <b>the airframe decision</b>, Report 2 §1. Your
+brief is inside it, collapsed at the top. Autosave protects you against a closed tab, not against a different
+laptop — export before the end of the session. You keep the same brief in S04, where you find out whether this
+airframe can actually be built.
+</div>
+
+</div>
+</body>
+</html>
